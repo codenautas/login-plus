@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
-  "repository": "codenautas/taller-abm",
-  "main": "server/server.js",
+  "repository": "codenautas/login-plus",
+  "main": "lib/login-plus.js",
   "contributors": [
     {
       "name": "Emilio Platzer",
@@ -55,8 +55,8 @@
   "qa-control": {
     "package-version": "0.0.1",
     "run-in": "server",
-    "type": "app",
+    "type": "lib",
     "stage": "designing",
-    "coverage": 100
+    "coverage": 50
   }
 }
