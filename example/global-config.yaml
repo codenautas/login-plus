@@ -1,0 +1,8 @@
+server:
+  port: 12348
+db:
+  host: localhost
+  database: tallerabm_db
+  port: 5432
+  user: tallerabm_user
+  password: example3092929
