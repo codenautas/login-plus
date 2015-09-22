@@ -1,15 +1,9 @@
-# login-plus
-
 <!--multilang v0 es:LEEME.md en:README.md  -->
-
+# login-plus
 <!--lang:es-->
-
 servicio de login para aplicaciones basadas en express
-
 <!--lang:en--]
-
 login service for express
-
 [!--lang:*-->
 
 <!-- cucardas -->
