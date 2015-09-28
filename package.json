@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "connect-ensure-login": "0.1.1",
+    "connect-flash": "0.1.1",
     "express-session": "1.11.3",
     "lodash": "3.10.1",
     "moment": "2.10.6",

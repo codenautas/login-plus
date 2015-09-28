@@ -17,6 +17,7 @@ describe('login-plus', function(){
         it('must redirect if not logged in', function(done){
             request(server)
             .get('/algo.txt')
+            .expect('location', './login')
             .expect(302, 'Found. Redirecting to ./login', done);
         });
         it('must get login page when not logged in', function(done){
@@ -36,6 +37,13 @@ describe('login-plus', function(){
             .post('/login')
             .field('username','prueba')
             .field('password','prueba1')
+            .expect(function(res){
+                console.log('**************');
+                console.log(res.flash);
+                console.log(res.cookies);
+                console.log(res.session);
+                console.dir(res,{depth:1});
+            })
             .expect(302, 'Found. Redirecting to ./index', done);
         });
     });
@@ -54,7 +62,7 @@ function createServer(dir, opts, fn) {
         if(username=='prueba' && password=='prueba1'){
             done(null, {username: 'prueba'});
         }else{
-            done('user not found');
+            done('user not found in this test.');
         }
     });
     return app;
