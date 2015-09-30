@@ -26,6 +26,18 @@ function md5(text){
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 
+app.use(function(req,res,next){
+    console.log('***************************');
+    console.dir(req,{depth:0});
+    console.log('req.cookies',req.cookies);
+    console.log('req.query  ',req.query  );
+    console.log('req.body   ',req.body   );
+    console.log('req.params ',req.params );
+    console.log('req.headers',req.headers);
+    // console.dir(res,{depth:0});
+    next();
+});
+
 var loginPlus = require('../lib/login-plus.js');
 
 loginPlus.init(app,{ });
