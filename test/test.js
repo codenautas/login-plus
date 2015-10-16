@@ -17,16 +17,22 @@ describe('login-plus', function(){
                 agent=_agent; 
             }).then(done,done);
         });
-        it('must redirect if not logged in', function(done){
+        it.skip('must redirect if not logged in', function(done){
             agent
             .get('/algo.txt')
-            .expect('location', './login')
-            .expect(302, 'Found. Redirecting to ./login', done);
+            .expect('location', '/login')
+            .expect(302, 'Found. Redirecting to /login', done);
         });
         it('must get login page when not logged in', function(done){
             agent
             .get('/login')
             .expect(200, '<div>The login page', done);
+        });
+        it('must redirect to root if not logged in', function(done){
+            agent
+            .get('/this/and/this/algo.txt')
+            .expect('location', '/login')
+            .expect(302, 'Found. Redirecting to /login', done);
         });
     });
     // TODO: poner un test para indicar que falta setValidator
@@ -43,7 +49,7 @@ describe('login-plus', function(){
             .expect(function(res){
                 // console.dir(res,{depth:0});
                 // console.log(res.headers);
-                console.log('set-cookies',res.headers["set-cookie"]);
+                // console.log('set-cookies',res.headers["set-cookie"]);
             })
             .end(done);
         });
@@ -53,10 +59,33 @@ describe('login-plus', function(){
             .type('form')
             .send({username:'prueba', password:'prueba1'})
             .expect(function(res){
-                console.log('****');
-                console.log('set-cookies',res.headers["set-cookie"]);
+                // console.log('****');
+                // console.log('set-cookies',res.headers["set-cookie"]);
             })
-            .expect(302, 'Found. Redirecting to ./index', done);
+            .expect(302, 'Found. Redirecting to /index', done);
+        });
+        it('must serve data if logged', function(done){
+            agent
+            .get('/private/data')
+            .expect('private: data',done);
+        });
+        it('must serve data if logged 2', function(done){
+            agent
+            .get('/private/data2')
+            .expect('private: data2',done);
+        });
+        it('if the login page was visited then unlog', function(done){
+            agent
+            .get('/login')
+            .expect(function(res){
+                agent
+                .get('/private/data3')
+                .expect(function(res){
+                })
+                .expect('location', '/login')
+                .expect(302, 'Found. Redirecting to /login', done);
+            })
+            .end(function(){});
         });
     });
 });
@@ -80,14 +109,18 @@ function createServerGetAgent(dir, opts, fn) {
         loginPlus.loginPageServe=function(req, res, next){
             res.end('<div>The login page');
         };
+        // loginPlus.logAll=true;
         loginPlus.init(app,{ });
         loginPlus.setValidator(function(username, password, done){
-            console.log('********* intento de entrar de ',username,password);
+            // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
                 done(null, {username: 'prueba'});
             }else{
                 done('user not found in this test.');
             }
+        });
+        app.get('/private/:id',function(req,res){
+            res.end('private: '+req.params.id);
         });
         var server = app.listen(INTERNAL_PORT++,function(){
             // resolve(server);
