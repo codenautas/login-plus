@@ -17,7 +17,7 @@ describe('login-plus', function(){
                 agent=_agent; 
             }).then(done,done);
         });
-        it.skip('must redirect if not logged in', function(done){
+        it('must redirect if not logged in', function(done){
             agent
             .get('/algo.txt')
             .expect('location', '/login')
@@ -77,15 +77,12 @@ describe('login-plus', function(){
         it('if the login page was visited then unlog', function(done){
             agent
             .get('/login')
-            .expect(function(res){
+            .end(function(){
                 agent
                 .get('/private/data3')
-                .expect(function(res){
-                })
                 .expect('location', '/login')
                 .expect(302, 'Found. Redirecting to /login', done);
-            })
-            .end(function(){});
+            });
         });
     });
 });
