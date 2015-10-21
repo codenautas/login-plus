@@ -9,6 +9,8 @@ var request = require('supertest');
 var loginPlus = require('..');
 var Promises = require('promise-plus');
 
+var expect = require('expect.js');
+
 describe('login-plus', function(){
     describe('not logged', function(){
         var agent;
@@ -85,6 +87,24 @@ describe('login-plus', function(){
             });
         });
     });
+    describe("init",function(){
+        it("reject init if the path for login.jade does not exists",function(done){
+            var app = express();
+            loginPlus.init(app,{unloggedPath:'unexisting-path' }).then(function(){
+                done("an error expected");
+            },function(err){
+                done();
+            });
+        });
+        it("reject init if login.jade does not exists",function(done){
+            var app = express();
+            loginPlus.init(app,{fileNameLogin:'unexisting-file' }).then(function(){
+                done("an error expected");
+            },function(err){
+                done();
+            });
+        });
+    });
 });
 
 var INTERNAL_PORT=34444;
@@ -107,7 +127,7 @@ function createServerGetAgent(dir, opts, fn) {
             res.end('<div>The login page');
         };
         // loginPlus.logAll=true;
-        loginPlus.init(app,{ });
+        loginPlus.init(app);
         loginPlus.setValidator(function(username, password, done){
             // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
