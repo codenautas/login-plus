@@ -1,7 +1,7 @@
 # login-plus
 login service for express
 
-![designing](https://img.shields.io/badge/stability-desgining-red.svg)
+![designing](https://img.shields.io/badge/stability-designing-red.svg)
 [![npm-version](https://img.shields.io/npm/v/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![downloads](https://img.shields.io/npm/dm/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![build](https://img.shields.io/travis/codenautas/login-plus/master.svg)](https://travis-ci.org/codenautas/login-plus)
@@ -51,6 +51,18 @@ loginPlus.setValidator(
 );
 
 ```
+
+
+## loginPlus.init(app, opts)
+
+
+(... comming soon ...)
+
+
+## loginPlus.setValidator(fn)
+
+
+(... comming soon ...)
 
 
 # License

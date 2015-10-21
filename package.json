@@ -1,7 +1,7 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
@@ -62,6 +62,6 @@
     "run-in": "server",
     "type": "lib",
     "stage": "designing",
-    "coverage": 50
+    "coverage": 100
   }
 }

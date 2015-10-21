@@ -7,7 +7,7 @@ login service for express
 [!--lang:*-->
 
 <!-- cucardas -->
-![designing](https://img.shields.io/badge/stability-desgining-red.svg)
+![designing](https://img.shields.io/badge/stability-designing-red.svg)
 [![npm-version](https://img.shields.io/npm/v/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![downloads](https://img.shields.io/npm/dm/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![build](https://img.shields.io/travis/codenautas/login-plus/master.svg)](https://travis-ci.org/codenautas/login-plus)
@@ -71,7 +71,34 @@ loginPlus.setValidator(
 
 ```
 
+<!--lang:*-->
+
+## loginPlus.init(app, opts)
+
 <!--lang:es-->
+
+A partir de esta línea `loginPlus` controla que la sesión esté logueada 
+si no redirecciona a /login
+
+<!--lang:en--]
+
+(... comming soon ...)
+
+[!--lang:*-->
+
+## loginPlus.setValidator(fn)
+
+<!--lang:es-->
+
+Registra la función que debe validar el usuario 
+y en caso de ser válido obtener la información adicional necesaria para la seción 
+(ej: rol o nivel de permisos)
+
+<!--lang:en--]
+
+(... comming soon ...)
+
+[!--lang:es-->
 
 # Licencia
 
