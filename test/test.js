@@ -104,12 +104,19 @@ describe('login-plus', function(){
                 done();
             });
         });
+        it("serve the default login page",function(done){
+            createServerGetAgent(null).then(function(agent){ 
+				agent
+				.get('/login')
+				.expect(200, /name="username".*name="password"/, done);
+            }).then(done,done);
+        });
     });
 });
 
 var INTERNAL_PORT=34444;
 
-function createServerGetAgent(dir, opts, fn) {
+function createServerGetAgent(opts) {
     return Promises.make(function(resolve, reject){
         var app = express();
         app.use(cookieParser());
@@ -123,11 +130,12 @@ function createServerGetAgent(dir, opts, fn) {
               }));
             });
         }
-        loginPlus.loginPageServe=function(req, res, next){
-            res.end('<div>The login page');
-        };
         // loginPlus.logAll=true;
-        loginPlus.init(app);
+        loginPlus.init(app,(opts===undefined?{
+			loginPageServe:function(req, res, next){
+				res.end('<div>The login page');
+			}
+		}:opts));
         loginPlus.setValidator(function(username, password, done){
             // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
