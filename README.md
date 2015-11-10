@@ -43,12 +43,19 @@ loginPlus.init(app,{ });
 loginPlus.setValidator(
     function(username, password, done) {
         if(username === 'admin' && password === 'secret.pass'){
-            done(null, {username: 'admin'});
+            done(null, {username: 'admin', when: Date()});
         }else{
             done('username or password error');
         }
     }
 );
+
+app.get('/user-info',function(req,res){
+    res.end(
+        'user: '+req.session.passport.username+
+        ' logged since '+req.session.passport.when
+    );
+});
 
 ```
 

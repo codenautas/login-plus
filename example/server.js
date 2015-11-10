@@ -51,6 +51,13 @@ var loginPlus = require('../lib/login-plus.js');
 
 loginPlus.init(app,{ });
 
+app.use(function(req,res,next){
+    console.log('------ logged ---------');
+    console.log('req.session',req.session);
+    next();
+});
+
+
 // probar con http://localhost:12348/ajax-example
 app.use('/',MiniTools.serveJade('example/client',true));
 app.use('/',MiniTools.serveStylus('example/client',true));
@@ -98,9 +105,8 @@ Promises.start(function(){
     clientDb=client;
     loginPlus.setValidator(
         function(username, password, done) {
-            // console.log('intento de entrar de ',username,password);
             clientDb.query(
-                'SELECT usuario as username FROM reqper.usuarios WHERE usuario=$1 AND clavemd5=$2',
+                'SELECT user as username FROM example."users" WHERE "user"=$1 AND pass_md5=$2',
                 [username, md5(password+username.toLowerCase())]
             ).fetchUniqueRow().then(function(data){
                 console.log('datos traidos',data.row);
@@ -119,7 +125,7 @@ Promises.start(function(){
         }
     );
 }).then(function(){
-    //ejemplo suma
+    //ejemplo suma solo para los logueados
     app.use('/ejemplo/suma',function(req,res){
         var params;
         if(req.method==='POST'){
@@ -127,11 +133,11 @@ Promises.start(function(){
         }else{
             params=req.query;
         }
-        var result=params.alfa+params.beta;
+        var result=(Number(params.alfa)+Number(params.beta)).toString()+' (de '+JSON.stringify(params)+')';
         if(req.method==='POST'){
             res.send(result);
         }else{
-            res.send('<h1>la suma es '+result+'<h1>');
+            res.send('<h1>la suma es '+result+'<h1><p><small>Servicio privado para el usuario '+req.session.passport.user);
         }
     });
 }).catch(function(err){

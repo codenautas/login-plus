@@ -62,12 +62,19 @@ loginPlus.init(app,{ });
 loginPlus.setValidator(
     function(username, password, done) {
         if(username === 'admin' && password === 'secret.pass'){
-            done(null, {username: 'admin'});
+            done(null, {username: 'admin', when: Date()});
         }else{
             done('username or password error');
         }
     }
 );
+
+app.get('/user-info',function(req,res){
+    res.end(
+        'user: '+req.session.passport.username+
+        ' logged since '+req.session.passport.when
+    );
+});
 
 ```
 
@@ -78,7 +85,10 @@ loginPlus.setValidator(
 <!--lang:es-->
 
 A partir de esta línea `loginPlus` controla que la sesión esté logueada 
-si no redirecciona a /login
+si no redirecciona a /login. 
+
+Los middlewares a partir de ahí pueden acceder a los datos de sesión 
+que están en `req.session.passport`.
 
 <!--lang:en--]
 
@@ -92,7 +102,7 @@ si no redirecciona a /login
 
 Registra la función que debe validar el usuario 
 y en caso de ser válido obtener la información adicional necesaria para la seción 
-(ej: rol o nivel de permisos)
+(ej: rol o nivel de permisos) que será accesible en `req.session.passport` 
 
 <!--lang:en--]
 
