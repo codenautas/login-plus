@@ -1,17 +1,15 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
   "main": "lib/login-plus.js",
-  "contributors": [
-    {
-      "name": "Emilio Platzer",
-      "email": "emilioplatzer@gmail.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Emilio Platzer", "email": "emilioplatzer@gmail.com",
+    "name": "Diego Florio", "email": "diegoefe@gmail.com"
+  }],
   "dependencies": {
     "concat-stream": "1.5.1",
     "connect-ensure-login": "0.1.1",

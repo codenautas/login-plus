@@ -62,7 +62,7 @@ describe('login-plus', function(){
             .send({username:'prueba', password:'prueba1'})
             .expect(function(res){
                 // console.log('****');
-                // console.log('set-cookies',res.headers["set-cookie"]);
+                //console.log('set-cookies',res.headers["set-cookie"]);
             })
             .expect(302, /Redirecting to \/index/, done);
         });
@@ -85,6 +85,24 @@ describe('login-plus', function(){
                 .expect('location', '/login')
                 .expect(302, /Redirecting to \/login/, done);
             });
+        });
+    });
+    describe('loggin in', function(){
+        var agent;
+        before(function (done) {
+            createServerGetAgent({successRedirect:'/loggedin'}).then(function(_agent){ 
+                agent=_agent; 
+            }).then(done,done);
+        });
+        it('must redirect to success page', function(done){
+            agent
+            .post('/login')
+            .type('form')
+            .send({username:'prueba', password:'prueba1'})
+            .expect(function(res){
+                 //console.log('****', res);
+            })
+            .expect(302, /Redirecting to \/loggedin/, done);
         });
     });
     describe("init",function(){
