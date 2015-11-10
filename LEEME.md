@@ -85,7 +85,14 @@ app.get('/user-info',function(req,res){
 <!--lang:es-->
 
 A partir de esta línea `loginPlus` controla que la sesión esté logueada 
-si no redirecciona a /login. 
+si no redirecciona a `/login`. 
+
+opts                | predeterminado       | uso
+--------------------|----------------------|---------------
+unloggedPath        | `../unlogged`        | carpeta en el servidor a la que apuntará la ruta /unlogged
+loginPagePath       | `/../unlogged/login` | dirección al archivo .jade que tiene el dibujo de la pantalla de login
+loginPageServe      | motor de jade        | función que sirve la página de login (usar esta función cuando no se desea un archivo .jade)
+successRedirect     | `/index`             | dirección a donde debe redirigir la aplicación cuando hay un loggin exitoso
 
 Los middlewares a partir de ahí pueden acceder a los datos de sesión 
 que están en `req.session.passport`.
