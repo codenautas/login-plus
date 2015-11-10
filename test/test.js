@@ -23,7 +23,7 @@ describe('login-plus', function(){
             agent
             .get('/algo.txt')
             .expect('location', '/login')
-            .expect(302, 'Found. Redirecting to /login', done);
+            .expect(302, /Redirecting to \/login/, done);
         });
         it('must get login page when not logged in', function(done){
             agent
@@ -34,7 +34,7 @@ describe('login-plus', function(){
             agent
             .get('/this/and/this/algo.txt')
             .expect('location', '/login')
-            .expect(302, 'Found. Redirecting to /login', done);
+            .expect(302, /Redirecting to \/login/, done);
         });
     });
     // TODO: poner un test para indicar que falta setValidator
@@ -64,7 +64,7 @@ describe('login-plus', function(){
                 // console.log('****');
                 // console.log('set-cookies',res.headers["set-cookie"]);
             })
-            .expect(302, 'Found. Redirecting to /index', done);
+            .expect(302, /Redirecting to \/index/, done);
         });
         it('must serve data if logged', function(done){
             agent
@@ -83,7 +83,7 @@ describe('login-plus', function(){
                 agent
                 .get('/private/data3')
                 .expect('location', '/login')
-                .expect(302, 'Found. Redirecting to /login', done);
+                .expect(302, /Redirecting to \/login/, done);
             });
         });
     });
@@ -106,9 +106,9 @@ describe('login-plus', function(){
         });
         it("serve the default login page",function(done){
             createServerGetAgent(null).then(function(agent){ 
-				agent
-				.get('/login')
-				.expect(200, /name="username".*name="password"/, done);
+                agent
+                .get('/login')
+                .expect(200, /name="username".*name="password"/, done);
             }).then(done,done);
         });
     });
