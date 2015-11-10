@@ -1,3 +1,8 @@
+"use strict";
+/*jshint eqnull:true */
+/*jshint globalstrict:true */
+/*jshint node:true */
+/*eslint-env node*/
 
 var express = require('express');
 var cookieParser = require('cookie-parser');
