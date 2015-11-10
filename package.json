@@ -11,6 +11,10 @@
       "name": "Emilio Platzer",
       "email": "emilioplatzer@gmail.com"
     }
+    {
+      "name": "Diego Florio",
+      "email": "diegoefe@gmail.com"
+    }
   ],
   "dependencies": {
     "concat-stream": "1.5.1",
