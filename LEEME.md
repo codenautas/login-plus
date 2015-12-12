@@ -93,6 +93,10 @@ unloggedPath        | `../unlogged`        | carpeta en el servidor a la que apu
 loginPagePath       | `/../unlogged/login` | dirección al archivo .jade que tiene el dibujo de la pantalla de login
 loginPageServe      | motor de jade        | función que sirve la página de login (usar esta función cuando no se desea un archivo .jade)
 successRedirect     | `/index`             | dirección a donde debe redirigir la aplicación cuando hay un loggin exitoso
+loginUrlPath        | `/login`             | dirección donde se muestra la página de login
+noLoggedUrlPath     | `/login`             | dirección de la página que se muestra cuando no está logueado si intenta acceder a una página donde se requiere autenticación
+failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
+failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
 
 Los middlewares a partir de ahí pueden acceder a los datos de sesión 
 que están en `req.session.passport`.
