@@ -55,8 +55,18 @@
     "curly": true,
     "forin": true
   },
+  "eslintConfig":{
+    "env": {
+      "node": false
+    },
+    "rules": {
+      "strict": 0,
+      "no-console": 1,
+      "no-unused-vars": 1
+    }
+  },
   "qa-control": {
-    "package-version": "0.0.2",
+    "package-version": "0.1.4",
     "run-in": "server",
     "type": "lib",
     "stage": "designing",
