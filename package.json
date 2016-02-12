@@ -1,7 +1,7 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
@@ -16,7 +16,7 @@
     "connect-flash": "0.1.1",
     "express-session": "1.12.1",
     "lodash": "3.10.1",
-    "moment": "2.10.6",
+    "moment": "2.11.2",
     "passport": "0.3.2",
     "passport-local": "1.0.0",
     
