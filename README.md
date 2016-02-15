@@ -37,7 +37,7 @@ var bodyParser = require('body-parser');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 
-var loginPlus = require('../lib/login-plus.js');
+var loginPlus = new require('login-plus').Manager;
 
 loginPlus.init(app,{ });
 
@@ -64,28 +64,29 @@ app.get('/user-info',function(req,res){
 ## loginPlus.init(app, opts)
 
 
-From this line on, `loginPlus` controls whether the session is logged. 
-If not, it redirects to `/login`.  
+From this line on, `loginPlus` controls whether the session is logged.
+If not, it redirects to `/login`.
 
 opts                | default opts         | use
 --------------------|----------------------|---------------
-unloggedPath        | `../unlogged`        | server directory to which the path /unlogged points 
+unloggedPath        | `../unlogged`        | server directory to which the path /unlogged points
 loginPagePath       | `/../unlogged/login` | path to the .jade file that contains the login screen
 loginPageServe      | motor de jade        | function that serves the login page (use this function when a .jade file is not desired)
 successRedirect     | `/index`             | successful login path
 loginUrlPath        | `/login`             | URL to the login page
-noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in 
+noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 
 
 From this point on, the middlewares can access the data session contained in `req.session.passport`.
 
 
+
 ## loginPlus.setValidator(fn)
 
 
-It registers the function that the user must validate and in case of success, obtains 
-the additional necessary information for the session (for example, role or level of permission) 
+It registers the function that the user must validate and in case of success, obtains
+the additional necessary information for the session (for example, role or level of permission)
 that will be available in `req.session.passport`
 
 

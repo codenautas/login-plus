@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var request = require('supertest');
 // var loginPlus = require('../lib/login-plus.js');
 var loginPlus = require('..');
+var loginPlusManager = new loginPlus.Manager;
 var Promises = require('promise-plus');
 
 var expect = require('expect.js');
@@ -111,9 +112,10 @@ describe('login-plus', function(){
         });
     });
     describe("init",function(){
+        var loginPlusM = new loginPlus.Manager;
         it("reject init if the path for login.jade does not exists",function(done){
             var app = express();
-            loginPlus.init(app,{unloggedPath:'unexisting-path' }).then(function(){
+            loginPlusM.init(app,{unloggedPath:'unexisting-path' }).then(function(){
                 done("an error expected");
             },function(err){
                 done();
@@ -121,7 +123,7 @@ describe('login-plus', function(){
         });
         it("reject init if login.jade does not exists",function(done){
             var app = express();
-            loginPlus.init(app,{fileNameLogin:'unexisting-file' }).then(function(){
+            loginPlusM.init(app,{fileNameLogin:'unexisting-file' }).then(function(){
                 done("an error expected");
             },function(err){
                 done();
@@ -154,12 +156,12 @@ function createServerGetAgent(opts) {
             });
         }
         // loginPlus.logAll=true;
-        loginPlus.init(app,(opts===undefined?{
-			loginPageServe:function(req, res, next){
-				res.end('<div>The login page');
-			}
-		}:opts));
-        loginPlus.setValidator(function(username, password, done){
+        loginPlusManager.init(app,(opts===undefined?{
+            loginPageServe:function(req, res, next){
+                res.end('<div>The login page');
+            }
+        }:opts));
+        loginPlusManager.setValidator(function(username, password, done){
             // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
                 done(null, {username: 'prueba'});
@@ -176,18 +178,3 @@ function createServerGetAgent(opts) {
         });
     });
 }
-
-
-function createServer2(dir, opts, fn) {
-
-  var _serve = loginPlus(dir, opts);
-
-  return http.createServer(function (req, res) {
-    fn && fn(req, res);
-    _serve(req, res, function (err) {
-      res.statusCode = err ? (err.status || 500) : 404;
-      res.end(err ? err.stack : 'sorry!');
-    });
-  });
-}
-
