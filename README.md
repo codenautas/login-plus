@@ -72,6 +72,7 @@ opts                | default opts         | use
 unloggedPath        | `../unlogged`        | server directory to which the path /unlogged points
 loginPagePath       | `/../unlogged/login` | path to the .jade file that contains the login screen
 loginPageServe      | motor de jade        | function that serves the login page (use this function when a .jade file is not desired)
+baseUrl             | `/`                  | base URL for all other URLs
 successRedirect     | `/index`             | successful login path
 loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in

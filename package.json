@@ -1,7 +1,7 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
@@ -15,13 +15,13 @@
     "connect-ensure-login": "0.1.1",
     "connect-flash": "0.1.1",
     "express-session": "1.13.0",
-    "lodash": "4.3.0",
-    "moment": "2.11.2",
+    "lodash": "4.6.1",
+    "moment": "2.12.0",
     "passport": "0.3.2",
     "passport-local": "1.0.0",
     
     "extension-serve-static": "0.1.6",
-    "mini-tools": "0.1.4",
+    "mini-tools": "0.2.3",
     "promise-plus": "0.0.6"
   },
   "devDependencies": {
@@ -29,12 +29,12 @@
     "cookie-parser": "1.4.1",
     "expect.js": "0.3.1",
     "express": "4.13.4",
-    "fs-promise": "0.4.1", 
+    "fs-promise": "0.5.0", 
     "istanbul": "0.4.2",
     "jade": "1.11.0",
     "mocha": "2.4.5",
     "read-yaml-promise": "1.0.2",
-    "stylus": "0.53.0",
+    "stylus": "0.54.0",
     "supertest": "1.2.0",
 
     "ajax-best-promise": "0.0.7",
