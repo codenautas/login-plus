@@ -176,6 +176,22 @@ describe('login-plus', function(){
                     }).then(done,done);
                 });
             });
+            describe.skip('action /login with base', function(){
+                var agent;
+                before(function (done) {
+                    createServerGetAgent({baseUrl:opt.base}).then(function(_agent){ 
+                        agent=_agent; 
+                    }).then(done,done);
+                });
+                it("must include base in action path", function(done){
+                    agent
+                    .get(opt.base+'/login')
+                    .expect(function(obt){
+                        console.log(obt.text);
+                    })
+                    .expect(200,new RegExp('form action="'+opt.base+'/login"'),done);
+                });
+            });
         });
     });
 });
