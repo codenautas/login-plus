@@ -72,7 +72,7 @@ describe('login-plus', function(){
             describe('to log', function(){
                 var agent;
                 before(function (done) {
-                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe}).then(function(_agent){ 
+                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe}, 'userFieldName').then(function(_agent){ 
                         agent=_agent; 
                     }).then(done,done);
                 });
@@ -106,6 +106,11 @@ describe('login-plus', function(){
                     agent
                     .get(opt.base+'/private/data2')
                     .expect('private: data2',done);
+                });
+                it('must serve whoami', function(done){
+                    agent
+                    .get(opt.base+'/whoami')
+                    .expect('I am: {"userFieldName":"prueba","userData":"data-user"}',done);
                 });
                 if(!opt.root){
                     it('must fail outside the base', function(done){
@@ -198,7 +203,7 @@ describe('login-plus', function(){
 
 var INTERNAL_PORT=34444;
 
-function createServerGetAgent(opts) {
+function createServerGetAgent(opts, userFieldName) {
     return Promises.make(function(resolve, reject){
         var app = express();
         app.use(cookieParser());
@@ -217,13 +222,20 @@ function createServerGetAgent(opts) {
         loginPlusManager.setValidator(function(username, password, done){
             // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
-                done(null, {username: 'prueba'});
+                if(userFieldName){
+                    done(null, {userFieldName: 'prueba', userData: 'data-user'});
+                }else{
+                    done(null, {username: 'user'});
+                }
             }else{
                 done('user not found in this test.');
             }
-        });
+        }, userFieldName);
         app.get(((opts||{}).baseUrl||'')+'/private/:id',function(req,res){
             res.end('private: '+req.params.id);
+        });
+        app.get(((opts||{}).baseUrl||'')+'/whoami',function(req,res){
+            res.end('I am: '+JSON.stringify(req.user));
         });
         var server = app.listen(INTERNAL_PORT++,function(){
             // resolve(server);

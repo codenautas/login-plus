@@ -125,19 +125,23 @@ From this point on, the middlewares can access the data session contained in `re
 
 [!--lang:*-->
 
-## loginPlus.setValidator(fn)
+## loginPlus.setValidator(fn, nameOfusernameField)
 
 <!--lang:es-->
 
 Registra la función que debe validar el usuario 
 y en caso de ser válido obtener la información adicional necesaria para la seción 
-(ej: rol o nivel de permisos) que será accesible en `req.session.passport` 
+(ej: rol o nivel de permisos) que será accesible en `req.session.passport`.
+
+En `nameOfusernameField` se puede especificar el nombre del campo que contiene el nombre de usuario
 
 <!--lang:en--]
 
 It registers the function that the user must validate and in case of success, obtains 
 the additional necessary information for the session (for example, role or level of permission) 
 that will be available in `req.session.passport`
+
+Use `nameOfusernameField` to change the name of the username field.
 
 [!--lang:es-->
 
