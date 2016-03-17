@@ -118,6 +118,7 @@ successRedirect     | `/index`             | successful login path
 loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in 
 failedLoginUrlPath  | `/login`             | URL to the failing login page
+userNameField       | `username`           | name of the "username" field
 
 
 From this point on, the middlewares can access the data session contained in `req.session.passport`.
@@ -125,7 +126,7 @@ From this point on, the middlewares can access the data session contained in `re
 
 [!--lang:*-->
 
-## loginPlus.setValidator(fn, nameOfusernameField)
+## loginPlus.setValidator(fn)
 
 <!--lang:es-->
 
@@ -133,15 +134,11 @@ Registra la función que debe validar el usuario
 y en caso de ser válido obtener la información adicional necesaria para la seción 
 (ej: rol o nivel de permisos) que será accesible en `req.session.passport`.
 
-En `nameOfusernameField` se puede especificar el nombre del campo que contiene el nombre de usuario
-
 <!--lang:en--]
 
 It registers the function that the user must validate and in case of success, obtains 
 the additional necessary information for the session (for example, role or level of permission) 
 that will be available in `req.session.passport`
-
-Use `nameOfusernameField` to change the name of the username field.
 
 [!--lang:es-->
 

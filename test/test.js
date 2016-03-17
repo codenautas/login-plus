@@ -72,7 +72,7 @@ describe('login-plus', function(){
             describe('to log', function(){
                 var agent;
                 before(function (done) {
-                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe}, 'userFieldName').then(function(_agent){ 
+                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe, userNameField:'userFieldName'}).then(function(_agent){ 
                         agent=_agent; 
                     }).then(done,done);
                 });
@@ -181,6 +181,9 @@ describe('login-plus', function(){
                     }).then(done,done);
                 });
             });
+            /*
+             * No se necesita porque action=./login alcanza
+             *
             describe.skip('action /login with base', function(){
                 var agent;
                 before(function (done) {
@@ -197,13 +200,14 @@ describe('login-plus', function(){
                     .expect(200,new RegExp('form action="'+opt.base+'/login"'),done);
                 });
             });
+            */
         });
     });
 });
 
 var INTERNAL_PORT=34444;
 
-function createServerGetAgent(opts, userFieldName) {
+function createServerGetAgent(opts) {
     return Promises.make(function(resolve, reject){
         var app = express();
         app.use(cookieParser());
@@ -219,10 +223,12 @@ function createServerGetAgent(opts, userFieldName) {
         }
         // loginPlus.logAll=true;
         loginPlusManager.init(app,opts);
+        var opts2 = opts||{};
+        opts2.baseUrl = opts2.baseUrl||'';
         loginPlusManager.setValidator(function(username, password, done){
             // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
-                if(userFieldName){
+                if(opts2.userNameField){
                     done(null, {userFieldName: 'prueba', userData: 'data-user'});
                 }else{
                     done(null, {username: 'user'});
@@ -230,11 +236,11 @@ function createServerGetAgent(opts, userFieldName) {
             }else{
                 done('user not found in this test.');
             }
-        }, userFieldName);
-        app.get(((opts||{}).baseUrl||'')+'/private/:id',function(req,res){
+        });
+        app.get(opts2.baseUrl+'/private/:id',function(req,res){
             res.end('private: '+req.params.id);
         });
-        app.get(((opts||{}).baseUrl||'')+'/whoami',function(req,res){
+        app.get(opts2.baseUrl+'/whoami',function(req,res){
             res.end('I am: '+JSON.stringify(req.user));
         });
         var server = app.listen(INTERNAL_PORT++,function(){
