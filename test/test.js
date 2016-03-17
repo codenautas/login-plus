@@ -72,7 +72,7 @@ describe('login-plus', function(){
             describe('to log', function(){
                 var agent;
                 before(function (done) {
-                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe, userNameField:'userFieldName'}).then(function(_agent){ 
+                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe, userFieldName:'userFieldName'}).then(function(_agent){ 
                         agent=_agent; 
                     }).then(done,done);
                 });
@@ -228,7 +228,7 @@ function createServerGetAgent(opts) {
         loginPlusManager.setValidator(function(username, password, done){
             // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
-                if(opts2.userNameField){
+                if(opts2.userFieldName){
                     done(null, {userFieldName: 'prueba', userData: 'data-user'});
                 }else{
                     done(null, {username: 'user'});
