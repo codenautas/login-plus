@@ -181,26 +181,18 @@ describe('login-plus', function(){
                     }).then(done,done);
                 });
             });
-            /*
-             * No se necesita porque action=./login alcanza
-             *
-            describe.skip('action /login with base', function(){
-                var agent;
-                before(function (done) {
-                    createServerGetAgent({baseUrl:opt.base}).then(function(_agent){ 
-                        agent=_agent; 
-                    }).then(done,done);
-                });
-                it("must include base in action path", function(done){
-                    agent
-                    .get(opt.base+'/login')
-                    .expect(function(obt){
-                        console.log(obt.text);
-                    })
-                    .expect(200,new RegExp('form action="'+opt.base+'/login"'),done);
-                });
-            });
-            */
+        });
+    });
+    describe("warnings", function(){
+        it("warn deprecated use of module", function(){
+            expect(function(){
+                loginPlus.init();
+            }).to.throwError(/deprecated/);
+        });
+        it("warn alert missuse of parentesis creating object", function(){
+            expect(function(){
+                loginPlus.Manager.init();
+            }).to.throwError(/lack.* outer.*parent/);
         });
     });
 });

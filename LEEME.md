@@ -56,7 +56,7 @@ var bodyParser = require('body-parser');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 
-var loginPlus = new require('login-plus').Manager;
+var loginPlus = new (require('login-plus').Manager);
 
 loginPlus.init(app,{ });
 

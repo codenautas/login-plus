@@ -37,7 +37,7 @@ var bodyParser = require('body-parser');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 
-var loginPlus = new require('login-plus').Manager;
+var loginPlus = new (require('login-plus').Manager);
 
 loginPlus.init(app,{ });
 
@@ -77,7 +77,7 @@ successRedirect     | `/index`             | successful login path
 loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in
 failedLoginUrlPath  | `/login`             | URL to the failing login page
-userNameField       | `username`           | name of the "username" field
+userFieldName       | `username`           | name of the "username" field
 
 
 From this point on, the middlewares can access the data session contained in `req.session.passport`.
