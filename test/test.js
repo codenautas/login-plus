@@ -39,7 +39,8 @@ describe('login-plus', function(){
                 });
                 it('must redirect if not logged in', function(done){
                     agent
-                    .get(opt.base+'/algo.txt')
+                    .get(opt.base+'/private/data')
+                    // .get(opt.base+'/algo.txt')
                     .expect('location', opt.base+'/login')
                     .expect(302, /Redirecting to \/((doble\/)?base\/)?login/, done);
                 });
@@ -115,7 +116,7 @@ describe('login-plus', function(){
                 if(!opt.root){
                     it('must fail outside the base', function(done){
                         agent
-                        .get('/privae/algo.txt')
+                        .get('/private/algo.txt')
                         .expect(404, done);
                     });
                 };
@@ -181,6 +182,38 @@ describe('login-plus', function(){
                     }).then(done,done);
                 });
             });
+            describe('logged in php session', function(){
+                var agent;
+                before(function (done) {
+                    createServerGetAgent({
+                        baseUrl:opt.base, 
+                        loginPageServe:simpleLoginPageServe,
+                        php:{
+                            varLogged:'abcd_usu_nombre',
+                            save_path:'./test/temp-session'
+                        }
+                    }).then(function(_agent){ 
+                        agent=_agent; 
+                    }).then(done,done);
+                });
+                it('must reject if php session is not active', function(done){
+                    agent
+                    .get(opt.base+'/private/data')
+                    .expect('location', opt.base+'/login')
+                    .expect(302, /Redirecting to \/((doble\/)?base\/)?login/, done);
+                });
+                it('must set cookie for test', function(done){
+                    agent
+                    .get(opt.base+'/php-set-cookie')
+                    .expect('set-cookie',/PHPSESSID=oek1/)
+                    .expect('ok', done);
+                });
+                it('must serve if php session', function(done){
+                    agent
+                    .get(opt.base+'/private/data')
+                    .expect('private: data',done);
+                });
+            });
         });
     });
     describe("warnings", function(){
@@ -213,10 +246,14 @@ function createServerGetAgent(opts) {
               }));
             });
         }
-        // loginPlus.logAll=true;
-        loginPlusManager.init(app,opts);
         var opts2 = opts||{};
         opts2.baseUrl = opts2.baseUrl||'';
+        app.get(opts2.baseUrl+'/php-set-cookie', function(req,res){
+            res.cookie('PHPSESSID', 'oek1ort6vbqdd7374eft6adv61');
+            res.end('ok');
+        });
+        // loginPlus.logAll=true;
+        loginPlusManager.init(app,opts);
         loginPlusManager.setValidator(function(username, password, done){
             // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
