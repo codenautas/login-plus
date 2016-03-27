@@ -208,7 +208,7 @@ describe('login-plus', function(){
                     .expect('set-cookie',/PHPSESSID=oek1/)
                     .expect('ok', done);
                 });
-                it('must serve if php session', function(done){
+                it.skip('must serve if php session', function(done){
                     agent
                     .get(opt.base+'/private/data')
                     .expect('private: data',done);
