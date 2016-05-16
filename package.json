@@ -33,7 +33,7 @@
     "express": "~4.13.4",
     "fs-promise": "~0.5.0", 
     "istanbul": "~0.4.3",
-    "jade": "~1.11.0",
+    "pug": "~2.0.0-alpha6",
     "mocha": "~2.4.5",
     "php-session-middleware": "~0.0.3",
     "read-yaml-promise": "~1.0.2",
