@@ -17,6 +17,8 @@ var Promises = require('promise-plus');
 
 var expect = require('expect.js');
 
+var sinon = require('sinon');
+
 var simpleLoginPageServe=function(req, res, next){
     res.end('<div>The login page');
 }
@@ -218,14 +220,30 @@ describe('login-plus', function(){
     });
     describe("warnings", function(){
         it("warn deprecated use of module", function(){
+            sinon.stub(console, "log");
             expect(function(){
                 loginPlus.init();
             }).to.throwError(/deprecated/);
+            try{
+                expect(console.log.args).to.eql([
+                    [ 'deprecated loginPlus.init is now replaced with new (loginPlus.Manager).init' ]
+                ]);
+            }finally{
+                console.log.restore();
+            };
         });
         it("warn alert missuse of parentesis creating object", function(){
+            sinon.stub(console, "log");
             expect(function(){
                 loginPlus.Manager.init();
             }).to.throwError(/lack.* outer.*parent/);
+            try{
+                expect(console.log.args).to.eql([
+                    [ "lack outer parenthesis in: var loginPlus = new (require('login-plus').Manager);" ]
+                ]);
+            }finally{
+                console.log.restore();
+            };
         });
     });
 });
