@@ -1,3 +1,5 @@
+"use strict";
+
 window.addEventListener('load',function(){
     var params={};
     (window.location.hash||"").split(/[#&]/g).forEach(function(pair){

@@ -1,12 +1,12 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
   "main": "lib/login-plus.js",
-  "files": ["lib"],
+  "files": ["lib", "for-client"],
   "contributors": [{
     "name": "Emilio Platzer", "email": "emilioplatzer@gmail.com",
     "name": "Diego Florio", "email": "diegoefe@gmail.com"
@@ -26,7 +26,7 @@
     
     "best-globals": "~0.4.6",
     "extension-serve-static": "~0.1.6",
-    "mini-tools": "~0.2.11",
+    "mini-tools": "~0.2.12",
     "promise-plus": "~0.0.6"
   },
   "devDependencies": {
@@ -46,7 +46,8 @@
 
     "ajax-best-promise": "~0.0.7",
     "best-promise": "~0.2.4",
-    "pg-promise-strict": "~0.2.3"
+    "pg-promise-strict": "~0.2.3",
+    "self-explain": "~0.10.6"
   },
   "optionalDependencies": {
     "php-session-middleware": "0.0.3"

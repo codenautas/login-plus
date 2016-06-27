@@ -17,7 +17,7 @@ var pg = require('pg-promise-strict');
 var readYaml = require('read-yaml-promise');
 var extensionServeStatic = require('extension-serve-static');
 var MiniTools = require('mini-tools');
-var jade = require('jade');
+//var pug = require('pug');
 var crypto = require('crypto');
 
 function md5(text){
@@ -28,6 +28,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(function(req,res,next){
+    return next(); // */
     console.log('***************************');
     console.dir(req,{depth:0});
     console.log('req.cookies',req.cookies);
@@ -49,8 +50,8 @@ app.use('/public', MiniTools.serveStylus('example/unlogged',true));
 app.use('/public', extensionServeStatic('example/unlogged', {staticExtensions:validExts}));
 
 var loginPlus = require('../lib/login-plus.js');
-
-loginPlus.init(app,{ });
+var loginPlusManager = new loginPlus.Manager;
+loginPlusManager.init(app,{ });
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
@@ -104,7 +105,7 @@ Promises.start(function(){
 }).then(function(client){
     console.log("CONECTED TO", actualConfig.db.database);
     clientDb=client;
-    loginPlus.setValidator(
+    loginPlusManager.setValidator(
         function(username, password, done) {
             clientDb.query(
                 'SELECT user as username FROM example."users" WHERE "user"=$1 AND pass_md5=$2',

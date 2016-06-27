@@ -15,6 +15,8 @@ var loginPlus = require('..');
 var loginPlusManager = new loginPlus.Manager;
 var Promises = require('promise-plus');
 
+var changing = require('best-globals').changing;
+
 var expect = require('expect.js');
 
 var sinon = require('sinon');
@@ -176,12 +178,29 @@ describe('login-plus', function(){
                         done();
                     });
                 });
+                it("serve the internal files",function(done){
+                    createServerGetAgent(opt.param==null?null:{baseUrl:opt.base}).then(function(agent){ 
+                        return agent
+                        .get(opt.base+'/auto-login.js')
+                        .expect(200, /^"use strict";/);
+                    }).then(done.bind(null,null),done);
+                });
                 it("serve the default login page",function(done){
                     createServerGetAgent(opt.param==null?null:{baseUrl:opt.base}).then(function(agent){ 
-                        agent
+                        return agent
                         .get(opt.base+'/login')
-                        .expect(200, /name="username".*name="password"/);
-                    }).then(done,done);
+                        .expect(200, /label.*Username/)
+                        .expect(200, /name="username"/)
+                        .expect(200, /id="password".*name="password"/);
+                    }).then(done.bind(null,null),done);
+                });
+                it("serve the parametrized default login page",function(done){
+                    var loginForm=changing(loginPlus.spanishLoginForm,{formImg:'this.png'});
+                    createServerGetAgent({baseUrl:opt.base, loginForm}).then(function(agent){ 
+                        return agent
+                        .get(opt.base+'/login')
+                        .expect(200, /usuario.*name="username"/);
+                    }).then(done.bind(null,null),done);
                 });
             });
             describe('logged in php session', function(){
