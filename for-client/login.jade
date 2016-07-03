@@ -17,5 +17,8 @@ form(id="loginForm", action="login", method="post")
       td
       td
         input(type="submit", value=buttonLabel)
+    each errorLine in (flash.error||[])
+      tr(style={color:'red'})
+        td(colspan=5)=errorLine
 if autoLogin
   script(src="auto-login.js")

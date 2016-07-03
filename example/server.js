@@ -116,7 +116,7 @@ Promises.start(function(){
             }).catch(function(err){
                 console.log('err',err);
                 if(err.code==='54011!'){
-                    done('Error en usuario o clave');
+                    done(null,false,{message: 'Error en usuario o clave'});
                 }else{
                     throw err;
                 }
