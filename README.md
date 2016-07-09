@@ -69,7 +69,6 @@ If not, it redirects to `/login`.
 
 opts                | default opts         | use
 --------------------|----------------------|---------------
-unloggedPath        | `../unlogged`        | server directory to which the path /unlogged points
 loginPagePath       | `/../unlogged/login` | path to the .jade file that contains the login screen
 loginPageServe      | motor de jade        | function that serves the login page (use this function when a .jade file is not desired)
 baseUrl             | `/`                  | base URL for all other URLs
@@ -78,9 +77,21 @@ loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
+fileStore           | false                | persist session in file system
+secret              | random key           | keys for cookies
+**php**             | false                | hibrid login system mergin with PHP
+ .save_path         |                      | path of PHP session files
+ .varLogged         |                      | `$SESSION` variable name for login control
+**loginForm**       |                      | opciones del formulario de login
+ .usernameLabel     | `Username`           | username label
+ .passwordLabel     | `Password`           | password label
+ .buttonLabel       | `Log In`             | button label
+ .formTitle         | `login`              | form title
+ .formImg           |                      | form image
+ .autoLogin         | false                | enable direct login from URL with `?u=user&p=pass&a=1`
 
 
-From this point on, the middlewares can access the data session contained in `req.session.passport`.
+From this point on, the middlewares can access the data session contained in `req.user`.
 
 
 

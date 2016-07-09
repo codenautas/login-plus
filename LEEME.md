@@ -90,7 +90,6 @@ si no redirecciona a `/login`.
 
 opts                | predeterminado       | uso
 --------------------|----------------------|---------------
-unloggedPath        | `../unlogged`        | carpeta en el servidor a la que apuntará la ruta /unlogged
 loginPagePath       | `/../unlogged/login` | dirección al archivo .jade que tiene el dibujo de la pantalla de login
 loginPageServe      | motor de jade        | función que sirve la página de login (usar esta función cuando no se desea un archivo .jade)
 baseUrl             | `/`                  | dirección base de todas las URL
@@ -99,9 +98,23 @@ loginUrlPath        | `/login`             | dirección donde se muestra la pág
 noLoggedUrlPath     | `/login`             | dirección de la página que se muestra cuando no está logueado si intenta acceder a una página donde se requiere autenticación
 failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
 failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
+userFieldName       | `username`           | nombre del campo "username"
+fileStore           | false                | si persiste las sesiones en disco (debe especificar `secret`)
+secret              | random key           | clave para las cookies, si se omite se cortará la sesión al cortar el servidor (porque en forma predeterminada la clave secreta es aleatoria y por lo tanto cambia)
+**php**             | false                | si comparte el sistema de login con un sistema en PHP
+ .save_path         |                      | lugar donde encontrar las sesiones PHP
+ .varLogged         |                      | variable de `$SESSION` que indica si el usuario está logueado
+**loginForm**       |                      | opciones del formulario de login
+ .usernameLabel     | `Username`           | texto para el campo usuario
+ .passwordLabel     | `Password`           | texto para el campo password
+ .buttonLabel       | `Log In`             | texto del botón entrar
+ .formTitle         | `login`              | título del formulario
+ .formImg           |                      | imagen a la derecha del formulario
+ .autoLogin         | false                | si permite el autologuea desde la URL especificando los parámetros `?u=user&p=pass&a=1`
+
 
 Los middlewares a partir de ahí pueden acceder a los datos de sesión 
-que están en `req.session.passport`.
+que están en `false`.
 
 <!--lang:en--]
 
@@ -110,7 +123,6 @@ If not, it redirects to `/login`.
 
 opts                | default opts         | use
 --------------------|----------------------|---------------
-unloggedPath        | `../unlogged`        | server directory to which the path /unlogged points 
 loginPagePath       | `/../unlogged/login` | path to the .jade file that contains the login screen
 loginPageServe      | motor de jade        | function that serves the login page (use this function when a .jade file is not desired)
 baseUrl             | `/`                  | base URL for all other URLs
@@ -119,9 +131,21 @@ loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in 
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
+fileStore           | false                | persist session in file system
+secret              | random key           | keys for cookies
+**php**             | false                | hibrid login system mergin with PHP
+ .save_path         |                      | path of PHP session files
+ .varLogged         |                      | `$SESSION` variable name for login control
+**loginForm**       |                      | opciones del formulario de login
+ .usernameLabel     | `Username`           | username label
+ .passwordLabel     | `Password`           | password label
+ .buttonLabel       | `Log In`             | button label
+ .formTitle         | `login`              | form title
+ .formImg           |                      | form image
+ .autoLogin         | false                | enable direct login from URL with `?u=user&p=pass&a=1`
 
 
-From this point on, the middlewares can access the data session contained in `req.session.passport`.
+From this point on, the middlewares can access the data session contained in `req.user`.
 
 
 [!--lang:*-->
