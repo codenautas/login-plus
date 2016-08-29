@@ -1,7 +1,7 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
@@ -12,20 +12,20 @@
     "name": "Diego Florio", "email": "diegoefe@gmail.com"
   }],
   "dependencies": {
-    "minimatch": "~3.0.2",
+    "minimatch": "~3.0.3",
 
     "concat-stream": "~1.5.1",
     "connect-ensure-login": "~0.1.1",
     "connect-flash": "~0.1.1",
-    "express-session": "~1.14.0",
-    "lodash": "~4.13.1",
+    "express-session": "~1.14.1",
+    "lodash": "~4.15.0",
     "moment": "~2.14.1",
     "passport": "~0.3.2",
     "passport-local": "~1.0.0",
-    "session-file-store": "~0.2.0",
+    "session-file-store": "~0.2.1",
     
-    "best-globals": "~0.4.8",
-    "mini-tools": "~0.3.0",
+    "best-globals": "~0.4.9",
+    "mini-tools": "~0.3.2",
     "promise-plus": "~0.0.6"
   },
   "devDependencies": {
@@ -34,25 +34,25 @@
     "expect.js": "~0.3.1",
     "express": "~4.14.0",
     "fs-promise": "~0.5.0", 
-    "istanbul": "~0.4.4",
-    "pug": "~2.0.0-beta3",
-    "mocha": "~2.5.3",
+    "istanbul": "~0.4.5",
+    "pug": "~2.0.0-beta6",
+    "mocha": "~3.0.2",
     "php-session-middleware": "~0.0.3",
     "read-yaml-promise": "~1.0.2",
-    "sinon": "~1.17.4",
+    "sinon": "~1.17.5",
     "stylus": "~0.54.5",
-    "supertest": "~1.2.0",
+    "supertest": "~2.0.0",
 
-    "ajax-best-promise": "~0.0.7",
+    "ajax-best-promise": "~0.2.0",
     "best-promise": "~0.2.4",
-    "pg-promise-strict": "~0.2.3",
-    "self-explain": "~0.10.6"
+    "pg-promise-strict": "~0.2.4",
+    "self-explain": "~0.10.7"
   },
   "optionalDependencies": {
     "php-session-middleware": "0.0.3"
   },
   "engines": {
-    "node": ">= 4.3"
+    "node": ">= 4.0"
   },
   "scripts": {
     "test": "mocha --reporter spec --bail --check-leaks test/",
@@ -60,23 +60,8 @@
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/",
     "start": "node example/server.js"
   },
-  "jshintConfig": {
-    "asi": false,
-    "curly": true,
-    "forin": true
-  },
-  "eslintConfig":{
-    "env": {
-      "node": false
-    },
-    "rules": {
-      "strict": 0,
-      "no-console": 1,
-      "no-unused-vars": 1
-    }
-  },
   "qa-control": {
-    "package-version": "0.2.0",
+    "package-version": "0.3.0",
     "run-in": "server",
     "type": "lib",
     "stage": "designing",
