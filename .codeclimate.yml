@@ -13,6 +13,8 @@ engines:
     checks:
       comma-dangle:
         enabled: false
+      strict:
+        enabled: false
   fixme:
     enabled: true
 ratings:
