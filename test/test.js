@@ -77,7 +77,12 @@ describe('login-plus', function(){
             describe('to log', function(){
                 var agent;
                 before(function (done) {
-                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe, userFieldName:'userFieldName'}).then(function(_agent){ 
+                    createServerGetAgent({
+                        baseUrl:opt.base, 
+                        loginPageServe:simpleLoginPageServe, 
+                        userFieldName:'userFieldName',
+                        alreadyLoggedIn:'/already-logged-in',
+                    }).then(function(_agent){ 
                         agent=_agent; 
                     }).then(done,done);
                 });
@@ -124,9 +129,14 @@ describe('login-plus', function(){
                         .expect(404, done);
                     });
                 };
-                it('if the login page was visited then unlog', function(done){
+                it('if the login page was visited then redirect to successful url', function(done){
                     agent
                     .get(opt.base+'/login')
+                    .expect(302, /Redirecting to \/.*already*/, done);
+                });
+                it('if the logout page was visited then unlog', function(done){
+                    agent
+                    .get(opt.base+'/logout')
                     .end(function(){
                         agent
                         .get(opt.base+'/private/data3')
