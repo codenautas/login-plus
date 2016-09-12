@@ -25,6 +25,8 @@ var simpleLoginPageServe=function(req, res, next){
     res.end('<div>The login page');
 }
 
+var globalChPassOk=false;
+
 describe('login-plus', function(){
     [
         {param:'/'          ,base:''           ,root:true },
@@ -44,6 +46,13 @@ describe('login-plus', function(){
                 it('must redirect if not logged in', function(done){
                     agent
                     .get(opt.base+'/private/data')
+                    // .get(opt.base+'/algo.txt')
+                    .expect('location', opt.base+'/login')
+                    .expect(302, /Redirecting to \/((doble\/)?base\/)?login/, done);
+                });
+                it('must redirect if not logged in and want chpass', function(done){
+                    agent
+                    .get(opt.base+'/chpass')
                     // .get(opt.base+'/algo.txt')
                     .expect('location', opt.base+'/login')
                     .expect(302, /Redirecting to \/((doble\/)?base\/)?login/, done);
@@ -145,7 +154,7 @@ describe('login-plus', function(){
                     });
                 });
             });
-            describe('loggin in', function(){
+            describe('loggin in and change password', function(){
                 var agent;
                 before(function (done) {
                     createServerGetAgent({baseUrl:opt.base, successRedirect:'/loggedin'}).then(function(_agent){ 
@@ -168,6 +177,26 @@ describe('login-plus', function(){
                          //console.log('****', res);
                     })
                     .expect(302, /Redirecting to \/.*loggedin/, done);
+                });
+                it('must reject erroneous change password', function(done){
+                    agent
+                    .post(opt.base+'/chpass')
+                    .type('form')
+                    .send({oldPassword:'bad_pass', newPassword:'prueba2'})
+                    .expect(function(res){
+                        expect(globalChPassOk).to.eql(2);
+                    })
+                    .expect(302, /Redirecting to \/.*chpass/, done);
+                });
+                it('must receive change password', function(done){
+                    agent
+                    .post(opt.base+'/chpass')
+                    .type('form')
+                    .send({oldPassword:'prueba1', newPassword:'prueba2'})
+                    .expect(function(res){
+                        expect(globalChPassOk).to.eql(1);
+                    })
+                    .expect(302, /Redirecting to \/.*login/, done);
                 });
             });
             describe("init",function(){
@@ -299,10 +328,8 @@ function createServerGetAgent(opts) {
             res.cookie('PHPSESSID', 'oek1ort6vbqdd7374eft6adv61');
             res.end('ok');
         });
-        // loginPlus.logAll=true;
         loginPlusManager.init(app,opts);
         loginPlusManager.setValidator(function(username, password, done){
-            // console.log('********* intento de entrar de ',username,password);
             if(username=='prueba' && password=='prueba1'){
                 if(opts2.userFieldName){
                     done(null, {userFieldName: 'prueba', userData: 'data-user'});
@@ -311,6 +338,18 @@ function createServerGetAgent(opts) {
                 }
             }else{
                 done('user not found in this test.');
+            }
+        });
+        loginPlusManager.setPasswordChanger(function(username, oldPassword, newPassword, done){
+            if(username=='user' && oldPassword=='prueba1' && newPassword=='prueba2'){
+                globalChPassOk=1;
+                done(null, true);
+            }else if(username=='user' && oldPassword!='prueba1'){
+                globalChPassOk=2;
+                done(null, false, {message: 'old does not match'});
+            }else{
+                console.log('***********', arguments);
+                done('error changing pass');
             }
         });
         app.get(opts2.baseUrl+'/private/:id',function(req,res){

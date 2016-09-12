@@ -55,7 +55,8 @@ loginPlusManager.init(app,{ });
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
-    console.log('req.session',req.session);
+    console.log('req.path/query/body',req.path,req.query,req.body);
+    console.log('req.session',req.session,req.user);
     next();
 });
 
@@ -108,7 +109,7 @@ Promises.start(function(){
     loginPlusManager.setValidator(
         function(username, password, done) {
             clientDb.query(
-                'SELECT user as username FROM example."users" WHERE "user"=$1 AND pass_md5=$2',
+                'SELECT "user" as username FROM example."users" WHERE "user"=$1 AND pass_md5=$2',
                 [username, md5(password+username.toLowerCase())]
             ).fetchUniqueRow().then(function(data){
                 console.log('datos traidos',data.row);
@@ -122,6 +123,27 @@ Promises.start(function(){
                 }
             }).catch(function(err){
                 console.log('error logueando',err);
+                console.log('stack',err.stack);
+            }).catch(done);
+        }
+    );
+    loginPlusManager.setPasswordChanger(
+        function(username, oldPassword, newPassword, done) {
+            console.log('*********** to see ch.pass');
+            return Promises.start(function(){
+                return clientDb.query(
+                    'UPDATE example."users" SET pass_md5=$3 WHERE "user"=$1 AND pass_md5=$2 RETURNING 1 as ok',
+                    [username, md5(oldPassword+username.toLowerCase()), md5(newPassword+username.toLowerCase())]
+                ).fetchOneRowIfExists();
+            }).then(function(result){
+                console.log('datos traidos p/ch.pass',result);
+                if(result.rowCount){
+                    done(null,true);
+                }else{
+                    done(null,false,{message: 'old password does not matchs or username is not longer valid'});
+                }
+            }).catch(function(err){
+                console.log('error changing pass',err);
                 console.log('stack',err.stack);
             }).catch(done);
         }
