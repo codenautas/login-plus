@@ -1,7 +1,7 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
@@ -19,13 +19,13 @@
     "connect-flash": "~0.1.1",
     "express-session": "~1.14.1",
     "lodash": "~4.15.0",
-    "moment": "~2.14.1",
+    "moment": "~2.15.0",
     "passport": "~0.3.2",
     "passport-local": "~1.0.0",
     "session-file-store": "~0.2.1",
     
-    "best-globals": "~0.4.10",
-    "mini-tools": "~0.3.2",
+    "best-globals": "~0.5.0",
+    "mini-tools": "~0.3.3",
     "promise-plus": "~0.0.6"
   },
   "devDependencies": {
@@ -56,9 +56,9 @@
     "node": ">= 4.0"
   },
   "scripts": {
-    "test": "mocha --reporter spec --bail --check-leaks test/",
-    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/",
+    "test": "mocha --reporter spec --bail --check-leaks test/test*.js",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/test*.js",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/test*.js",
     "start": "node example/server.js"
   },
   "qa-control": {
