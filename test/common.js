@@ -10,15 +10,11 @@ var bodyParser = require('body-parser');
 
 //var assert = require('assert');
 var request = require('supertest');
-// var loginPlus = require('../lib/login-plus.js');
+
 var loginPlus = require('..');
 var Promises = require('promise-plus');
 
 var changing = require('best-globals').changing;
-
-var expect = require('expect.js');
-
-var sinon = require('sinon');
 
 var simpleLoginPageServe=function(req, res, next){
     res.end('<div>The login page');
