@@ -6,7 +6,6 @@
 
 // APP
 
-var _ = require('lodash');
 var express = require('express');
 var app = express();
 var cookieParser = require('cookie-parser');
@@ -17,6 +16,7 @@ var pg = require('pg-promise-strict');
 var readYaml = require('read-yaml-promise');
 var extensionServeStatic = require('extension-serve-static');
 var MiniTools = require('mini-tools');
+var bestGlobals = require('best-globals');
 //var pug = require('pug');
 var crypto = require('crypto');
 
@@ -92,7 +92,7 @@ Promises.start(function(){
         }
         return {};
     }).then(function(localConfig){
-        _.merge(actualConfig,localConfig);
+        actualConfig=bestGlobals.changing(localConfig, actualConfig);
     });
 }).then(function(){
     return new Promises.Promise(function(resolve, reject){

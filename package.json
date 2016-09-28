@@ -1,7 +1,7 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "0.7.2",
+  "version": "0.8.3",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
@@ -12,34 +12,31 @@
     "name": "Diego Florio", "email": "diegoefe@gmail.com"
   }],
   "dependencies": {
-    "minimatch": "~3.0.3",
-
-    "concat-stream": "~1.5.2",
     "connect-ensure-login": "~0.1.1",
     "connect-flash": "~0.1.1",
     "express-session": "~1.14.1",
-    "lodash": "~4.15.0",
-    "moment": "~2.14.1",
+    "fs-promise": "~0.5.0", 
     "passport": "~0.3.2",
     "passport-local": "~1.0.0",
     "session-file-store": "~0.2.1",
-    
-    "best-globals": "~0.4.10",
-    "mini-tools": "~0.3.2",
+        
+    "best-globals": "~0.5.0",
+    "mini-tools": "~0.3.3",
     "promise-plus": "~0.0.6"
   },
   "devDependencies": {
     "body-parser": "~1.15.2",
+    "concat-stream": "~1.5.2",
     "cookie-parser": "~1.4.3",
     "expect.js": "~0.3.1",
     "express": "~4.14.0",
-    "fs-promise": "~0.5.0", 
     "istanbul": "~0.4.5",
+    "lodash": "~4.16.0",
     "pug": "~2.0.0-beta6",
     "mocha": "~3.0.2",
     "php-session-middleware": "~0.0.3",
     "read-yaml-promise": "~1.0.2",
-    "sinon": "~1.17.5",
+    "sinon": "~1.17.6",
     "stylus": "~0.54.5",
     "supertest": "~2.0.0",
 
@@ -47,7 +44,7 @@
     "best-promise": "~0.2.4",
     "extension-serve-static": "~0.1.6",
     "pg-promise-strict": "~0.2.4",
-    "self-explain": "~0.10.7"
+    "self-explain": "~0.10.8"
   },
   "optionalDependencies": {
     "php-session-middleware": "0.0.3"
@@ -56,9 +53,9 @@
     "node": ">= 4.0"
   },
   "scripts": {
-    "test": "mocha --reporter spec --bail --check-leaks test/",
-    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/",
+    "test": "mocha --reporter spec --bail --check-leaks test/test*.js",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/test*.js",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/test*.js",
     "start": "node example/server.js"
   },
   "qa-control": {
