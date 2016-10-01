@@ -12,7 +12,6 @@ var bodyParser = require('body-parser');
 var request = require('supertest');
 // var loginPlus = require('../lib/login-plus.js');
 var loginPlus = require('..');
-var Promises = require('promise-plus');
 
 var changing = require('best-globals').changing;
 
