@@ -90,8 +90,8 @@ si no redirecciona a `/login`.
 
 opts                | predeterminado       | uso
 --------------------|----------------------|---------------
-loginPagePath       | `/../unlogged/login` | dirección al archivo .jade que tiene el dibujo de la pantalla de login
-loginPageServe      | motor de jade        | función que sirve la página de login (usar esta función cuando no se desea un archivo .jade)
+loginPagePath       | *interno [1]*        | dirección al archivo .jade que tiene el dibujo de la pantalla de login
+loginPageServe      | *motor de jade*      | función que sirve la página de login (usar esta función cuando no se desea un archivo .jade)
 baseUrl             | `/`                  | dirección base de todas las URL
 successRedirect     | `/index`             | dirección a donde debe redirigir la aplicación cuando hay un loggin exitoso
 loginUrlPath        | `/login`             | dirección donde se muestra la página de login
@@ -123,8 +123,8 @@ If not, it redirects to `/login`.
 
 opts                | default opts         | use
 --------------------|----------------------|---------------
-loginPagePath       | `/../unlogged/login` | path to the .jade file that contains the login screen
-loginPageServe      | motor de jade        | function that serves the login page (use this function when a .jade file is not desired)
+loginPagePath       | *internal [1]*       | path to the .jade file that contains the login screen
+loginPageServe      | *jade motor*         | function that serves the login page (use this function when a .jade file is not desired)
 baseUrl             | `/`                  | base URL for all other URLs
 successRedirect     | `/index`             | successful login path
 loginUrlPath        | `/login`             | URL to the login page

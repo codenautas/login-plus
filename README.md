@@ -69,8 +69,8 @@ If not, it redirects to `/login`.
 
 opts                | default opts         | use
 --------------------|----------------------|---------------
-loginPagePath       | `/../unlogged/login` | path to the .jade file that contains the login screen
-loginPageServe      | motor de jade        | function that serves the login page (use this function when a .jade file is not desired)
+loginPagePath       | *internal [1]*       | path to the .jade file that contains the login screen
+loginPageServe      | *jade motor*         | function that serves the login page (use this function when a .jade file is not desired)
 baseUrl             | `/`                  | base URL for all other URLs
 successRedirect     | `/index`             | successful login path
 loginUrlPath        | `/login`             | URL to the login page

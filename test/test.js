@@ -156,7 +156,7 @@ describe('login-plus', function(){
                 var loginPlusM = new loginPlus.Manager;
                 it("reject init if the path for login.jade does not exists",function(done){
                     var app = express();
-                    loginPlusM.init(app,{unloggedPath:'unexisting-path' }).then(function(){
+                    loginPlusM.init(app,{loginPagePath:'unexisting-path' }).then(function(){
                         done("an error expected");
                     },function(err){
                         done();
