@@ -10,14 +10,12 @@ var express = require('express');
 var app = express();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var Promises = require('best-promise');
 var fs = require('fs-promise');
 var pg = require('pg-promise-strict');
 var readYaml = require('read-yaml-promise');
 var extensionServeStatic = require('extension-serve-static');
 var MiniTools = require('mini-tools');
 var bestGlobals = require('best-globals');
-//var pug = require('pug');
 var crypto = require('crypto');
 
 function md5(text){
@@ -51,7 +49,7 @@ app.use('/public', extensionServeStatic('example/unlogged', {staticExtensions:va
 
 var loginPlus = require('../lib/login-plus.js');
 var loginPlusManager = new loginPlus.Manager;
-loginPlusManager.init(app,{ });
+loginPlusManager.init(app,{});
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
@@ -82,20 +80,13 @@ var actualConfig;
 
 var clientDb;
 
-Promises.start(function(){
-    return readYaml('example/global-config.yaml',{encoding: 'utf8'});
-}).then(function(globalConfig){
-    actualConfig=globalConfig;
-    return readYaml('example/local-config.yaml',{encoding: 'utf8'}).catch(function(err){
-        if(err.code!=='ENOENT'){
-            throw err;
-        }
-        return {};
-    }).then(function(localConfig){
-        actualConfig=bestGlobals.changing(localConfig, actualConfig);
-    });
+MiniTools.readConfig([
+    'example/global-config',
+    'example/local-config'
+]).then(function(config){
+    actualConfig=config;
 }).then(function(){
-    return new Promises.Promise(function(resolve, reject){
+    return new Promise(function(resolve, reject){
         var server=app.listen(actualConfig.server.port, function(event) {
             console.log('Listening on port %d', server.address().port);
             resolve();
@@ -109,11 +100,15 @@ Promises.start(function(){
     loginPlusManager.setValidator(
         function(username, password, done) {
             clientDb.query(
-                'SELECT "user" as username FROM example."users" WHERE "user"=$1 AND pass_md5=$2',
+                'SELECT "user" as username, active FROM example."users" WHERE "user"=$1 AND pass_md5=$2',
                 [username, md5(password+username.toLowerCase())]
             ).fetchUniqueRow().then(function(data){
                 console.log('datos traidos',data.row);
-                done(null, data.row);
+                if(data.row.active){
+                    done(null, data.row);
+                }else{
+                    done(null, null, {message:'inactive'});
+                }
             }).catch(function(err){
                 console.log('err',err);
                 if(err.code==='54011!'){
@@ -130,7 +125,7 @@ Promises.start(function(){
     loginPlusManager.setPasswordChanger(
         function(username, oldPassword, newPassword, done) {
             console.log('*********** to see ch.pass');
-            return Promises.start(function(){
+            return Promise.resolve().start(function(){
                 return clientDb.query(
                     'UPDATE example."users" SET pass_md5=$3 WHERE "user"=$1 AND pass_md5=$2 RETURNING 1 as ok',
                     [username, md5(oldPassword+username.toLowerCase()), md5(newPassword+username.toLowerCase())]

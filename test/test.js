@@ -12,7 +12,6 @@ var bodyParser = require('body-parser');
 var request = require('supertest');
 // var loginPlus = require('../lib/login-plus.js');
 var loginPlus = require('..');
-var Promises = require('promise-plus');
 
 var changing = require('best-globals').changing;
 
@@ -157,7 +156,7 @@ describe('login-plus', function(){
                 var loginPlusM = new loginPlus.Manager;
                 it("reject init if the path for login.jade does not exists",function(done){
                     var app = express();
-                    loginPlusM.init(app,{unloggedPath:'unexisting-path' }).then(function(){
+                    loginPlusM.init(app,{loginPagePath:'unexisting-path' }).then(function(){
                         done("an error expected");
                     },function(err){
                         done();

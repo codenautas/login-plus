@@ -12,7 +12,6 @@ var bodyParser = require('body-parser');
 var request = require('supertest');
 
 var loginPlus = require('..');
-var Promises = require('promise-plus');
 
 var changing = require('best-globals').changing;
 
@@ -25,7 +24,7 @@ function internal(INTERNAL_PORT, spy){
     INTERNAL_PORT = INTERNAL_PORT || 34444;
 
     function createServerGetAgent(opts) {
-        return Promises.make(function(resolve, reject){
+        return new Promise(function(resolve, reject){
             var app = express();
             app.use(cookieParser());
             var concat = require('concat-stream');
