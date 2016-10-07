@@ -49,7 +49,7 @@ app.use('/public', extensionServeStatic('example/unlogged', {staticExtensions:va
 
 var loginPlus = require('../lib/login-plus.js');
 var loginPlusManager = new loginPlus.Manager;
-loginPlusManager.init(app,{});
+loginPlusManager.init(app,{allowHttpLogin:true});
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
