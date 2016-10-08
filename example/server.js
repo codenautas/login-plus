@@ -43,13 +43,15 @@ var validExts=[
     'jpg','png','gif',
     'css','js','manifest'];
 
-app.use('/public', MiniTools.serveJade('example/unlogged',true));
-app.use('/public', MiniTools.serveStylus('example/unlogged',true));
-app.use('/public', extensionServeStatic('example/unlogged', {staticExtensions:validExts}));
+var baseUrl='';
+
+app.use(baseUrl+'/public', MiniTools.serveJade('example/unlogged',true));
+app.use(baseUrl+'/public', MiniTools.serveStylus('example/unlogged',true));
+app.use(baseUrl+'/public', extensionServeStatic('example/unlogged', {staticExtensions:validExts}));
 
 var loginPlus = require('../lib/login-plus.js');
 var loginPlusManager = new loginPlus.Manager;
-loginPlusManager.init(app,{allowHttpLogin:true});
+loginPlusManager.init(app,{allowHttpLogin:true, baseUrl:baseUrl});
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
@@ -68,9 +70,9 @@ var serveErr = MiniTools.serveErr;
 
 var mime = extensionServeStatic.mime;
 
-app.use('/',extensionServeStatic('./node_modules/ajax-best-promise/bin', {staticExtensions:'js'}));
+app.use(baseUrl+'/',extensionServeStatic('./node_modules/ajax-best-promise/bin', {staticExtensions:'js'}));
 
-app.use('/',extensionServeStatic('./client2', {
+app.use(baseUrl+'/',extensionServeStatic('./client2', {
     index: ['index.html'], 
     extensions:[''], 
     staticExtensions:validExts
@@ -145,7 +147,7 @@ MiniTools.readConfig([
     );
 }).then(function(){
     //ejemplo suma solo para los logueados
-    app.use('/ejemplo/suma',function(req,res){
+    app.use(baseUrl+'/ejemplo/suma',function(req,res){
         var params;
         if(req.method==='POST'){
             params=req.body;
