@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(function(req,res,next){
-    return next(); // */
+    /* return next(); // */
     console.log('***************************');
     console.dir(req,{depth:0});
     console.log('req.cookies',req.cookies);
@@ -43,7 +43,7 @@ var validExts=[
     'jpg','png','gif',
     'css','js','manifest'];
 
-var baseUrl='';
+var baseUrl='/test-lp';
 
 app.use(baseUrl+'/public', MiniTools.serveJade('example/unlogged',true));
 app.use(baseUrl+'/public', MiniTools.serveStylus('example/unlogged',true));
@@ -62,9 +62,9 @@ app.use(function(req,res,next){
 
 
 // probar con http://localhost:12348/ajax-example
-app.use('/',MiniTools.serveJade('example/client',true));
-app.use('/',MiniTools.serveStylus('example/client',true));
-app.use('/',extensionServeStatic('./node_modules/ajax-best-promise/bin', {staticExtensions:['js']}));
+app.use(baseUrl+'/',MiniTools.serveJade('example/client',true));
+app.use(baseUrl+'/',MiniTools.serveStylus('example/client',true));
+app.use(baseUrl+'/',extensionServeStatic('./node_modules/ajax-best-promise/bin', {staticExtensions:['js']}));
 
 var serveErr = MiniTools.serveErr;
 
