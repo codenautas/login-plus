@@ -43,7 +43,7 @@ var validExts=[
     'jpg','png','gif',
     'css','js','manifest'];
 
-var baseUrl='/test-lp';
+var baseUrl=''; // '/test-lp';
 
 app.use(baseUrl+'/public', MiniTools.serveJade('example/unlogged',true));
 app.use(baseUrl+'/public', MiniTools.serveStylus('example/unlogged',true));

@@ -39,6 +39,9 @@ function internal(INTERNAL_PORT, spy){
             }
             var opts2 = opts||{};
             opts2.baseUrl = opts2.baseUrl||'';
+            if(opts){
+                opts.allowHttpLogin=true;
+            }
             app.get(opts2.baseUrl+'/php-set-cookie', function(req,res){
                 res.cookie('PHPSESSID', 'oek1ort6vbqdd7374eft6adv61');
                 res.end('ok');
