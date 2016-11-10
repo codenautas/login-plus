@@ -6,3 +6,4 @@ db:
   port: 5432
   user: codenautas_user
   password: example3092929
+  strength: true
