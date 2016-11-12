@@ -243,6 +243,19 @@ describe('login-plus', function(){
                 console.log.restore();
             };
         });
+        it("warn deprecated use of options", function(){
+            sinon.stub(console, "log");
+            var loginPlusDep = new loginPlus.Manager;
+            var app = express();
+            loginPlusDep.init(app, {unloggedPath: 'x'});
+            try{
+                expect(console.log.args).to.eql([
+                    [ 'deprecate login-plus.option.unloggedPath' ]
+                ]);
+            }finally{
+                console.log.restore();
+            };
+        });
         it("warn alert missuse of parentesis creating object", function(){
             sinon.stub(console, "log");
             expect(function(){
