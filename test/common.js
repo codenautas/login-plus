@@ -48,7 +48,7 @@ function internal(INTERNAL_PORT, spy){
             });
             var loginPlusManager = new loginPlus.Manager;
             loginPlusManager.init(app,opts);
-            loginPlusManager.setValidator(function(username, password, done){
+            loginPlusManager.setValidatorStrategy(function(req, username, password, done){
                 if(username=='prueba' && password=='prueba1'){
                     if(opts2.userFieldName){
                         done(null, {userFieldName: 'prueba', userData: 'data-user'});
@@ -59,7 +59,7 @@ function internal(INTERNAL_PORT, spy){
                     done('user not found in this test.');
                 }
             });
-            loginPlusManager.setPasswordChanger(function(username, oldPassword, newPassword, done){
+            loginPlusManager.setPasswordChanger(function(req, username, oldPassword, newPassword, done){
                 if(username=='user' && oldPassword=='prueba1' && newPassword=='prueba2'){
                     spy.globalChPassOk=1;
                     done(null, true);

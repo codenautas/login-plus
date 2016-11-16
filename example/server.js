@@ -99,8 +99,9 @@ MiniTools.readConfig([
 }).then(function(client){
     console.log("CONECTED TO", actualConfig.db.database);
     clientDb=client;
-    loginPlusManager.setValidator(
-        function(username, password, done) {
+    loginPlusManager.setValidatorStrategy(
+        function(req, username, password, done) {
+            console.log('validating in req',req.session,req.user);
             clientDb.query(
                 'SELECT "user" as username, active FROM example."users" WHERE "user"=$1 AND pass_md5=$2',
                 [username, md5(password+username.toLowerCase())]
@@ -125,9 +126,8 @@ MiniTools.readConfig([
         }
     );
     loginPlusManager.setPasswordChanger(
-        function(username, oldPassword, newPassword, done) {
-            console.log('*********** to see ch.pass');
-            return Promise.resolve().start(function(){
+        function(req, username, oldPassword, newPassword, done) {
+            return Promise.resolve().then(function(){
                 return clientDb.query(
                     'UPDATE example."users" SET pass_md5=$3 WHERE "user"=$1 AND pass_md5=$2 RETURNING 1 as ok',
                     [username, md5(oldPassword+username.toLowerCase()), md5(newPassword+username.toLowerCase())]
