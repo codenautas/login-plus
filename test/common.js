@@ -19,7 +19,7 @@ var simpleLoginPageServe=function(req, res, next){
     res.end('<div>The login page');
 }
 
-function internal(INTERNAL_PORT, spy){
+function internal(INTERNAL_PORT, spy, validatorOpt){
 
     INTERNAL_PORT = INTERNAL_PORT || 34444;
 
@@ -48,7 +48,7 @@ function internal(INTERNAL_PORT, spy){
             });
             var loginPlusManager = new loginPlus.Manager;
             loginPlusManager.init(app,opts);
-            loginPlusManager.setValidatorStrategy(function(req, username, password, done){
+            var validatorStrategy = function(req, username, password, done){
                 if(username=='prueba' && password=='prueba1'){
                     if(opts2.userFieldName){
                         done(null, {userFieldName: 'prueba', userData: 'data-user'});
@@ -58,16 +58,23 @@ function internal(INTERNAL_PORT, spy){
                 }else{
                     done('user not found in this test.');
                 }
-            });
+            };
+            if(validatorOpt){
+                loginPlusManager.setValidatorStrategy(validatorOpt, validatorStrategy);
+            }else{
+                loginPlusManager.setValidatorStrategy(validatorStrategy);
+            }
             loginPlusManager.setPasswordChanger(function(req, username, oldPassword, newPassword, done){
+                console.log('intentando chpass ', username, oldPassword, newPassword)
                 if(username=='user' && oldPassword=='prueba1' && newPassword=='prueba2'){
                     spy.globalChPassOk=1;
                     done(null, true);
-                }else if(username=='user' && oldPassword!='prueba1'){
+                }else if(username=='user' && oldPassword!='prueba1' && oldPassword!='error'){
                     spy.globalChPassOk=2;
                     done(null, false, {message: 'old does not match'});
                 }else{
-                    console.log('***********', arguments);
+                    spy.globalChPassOk=3;
+                    // console.log('***********', arguments);
                     done('error changing pass');
                 }
             });

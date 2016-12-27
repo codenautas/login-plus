@@ -49,18 +49,14 @@ describe('login-plus with fs', function(){
                     agent
                     .post(opt.base+'/login')
                     .type('form')
-                    .send({username:'prueba', password:'prueba1'})
+                    .send({username2:'prueba', password:'prueba1'})
                     .expect(function(res){
                          //console.log('****', res);
                     })
                     .expect(302, /Redirecting to \/.*loggedin/, done);
                 });
-                // it('must get then name from fileStore', function(done){
-                //     agent
-                //     .get(opt.base+'/whoami') 
-                //     .expect(200, /I am: {"username":"user"}/, done); //logged with an alias
-                // });
                 it('must reject erroneous change password', function(done){
+                    spy.globalChPassOk=-2;
                     agent
                     .post(opt.base+'/chpass')
                     .type('form')
@@ -71,6 +67,7 @@ describe('login-plus with fs', function(){
                     .expect(302, /Redirecting to \/.*chpass/, done);
                 });
                 it('must receive change password', function(done){
+                    spy.globalChPassOk=-1;
                     agent
                     .post(opt.base+'/chpass')
                     .type('form')
@@ -80,10 +77,42 @@ describe('login-plus with fs', function(){
                     })
                     .expect(302, /Redirecting to \/.*login/, done);
                 });
+                it('must redirect to success page in another login', function(done){
+                    agent
+                    .post(opt.base+'/login')
+                    .type('form')
+                    .send({username2:'prueba', password:'prueba1'})
+                    .expect(function(res){
+                         //console.log('****', res);
+                    })
+                    .expect(302, /Redirecting to \/.*loggedin/, done);
+                });
+                it('must detect change password error', function(done){
+                    spy.globalChPassOk=-4;
+                    agent
+                    .post(opt.base+'/chpass')
+                    .type('form')
+                    .send({oldPassword:'prueba1', newPassword:'p'})
+                    .expect(function(res){
+                        expect(spy.globalChPassOk).to.eql(-4);
+                    })
+                    .expect(302, /Redirecting to \/.*chpass/, done);
+                });
+                it('must detect change password error', function(done){
+                    spy.globalChPassOk=-3;
+                    agent
+                    .post(opt.base+'/chpass')
+                    .type('form')
+                    .send({oldPassword:'error', newPassword:'prueba2'})
+                    .expect(function(res){
+                        expect(spy.globalChPassOk).to.eql(3);
+                    })
+                    .expect(302, /Redirecting to \/.*chpass/, done);
+                });
             });
         });
     });
 });
 
-var common = require('./common.js')(39932, spy);
+var common = require('./common.js')(39932, spy, { usernameField: 'username2'});
 var createServerGetAgent = common.createServerGetAgent;

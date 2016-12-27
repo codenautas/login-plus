@@ -1,7 +1,7 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
@@ -20,18 +20,18 @@
     "passport-local": "~1.0.0",
     "session-file-store": "~1.0.0",
         
-    "best-globals": "~0.5.5",
+    "best-globals": "~0.7.1",
     "mini-tools": "~0.3.7"
   },
   "devDependencies": {
     "body-parser": "~1.15.2",
-    "concat-stream": "~1.5.2",
+    "concat-stream": "~1.6.0",
     "cookie-parser": "~1.4.3",
     "expect.js": "~0.3.1",
     "express": "~4.14.0",
     "istanbul": "~0.4.5",
     "pug": "~2.0.0-beta6",
-    "mocha": "~3.1.2",
+    "mocha": "~3.2.0",
     "php-session-middleware": "~0.0.3",
     "read-yaml-promise": "~1.0.2",
     "sinon": "~1.17.6",
