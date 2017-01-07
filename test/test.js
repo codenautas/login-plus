@@ -156,7 +156,7 @@ describe('login-plus', function(){
                 var loginPlusM = new loginPlus.Manager;
                 it("reject init if the path for login.jade does not exists",function(done){
                     var app = express();
-                    loginPlusM.init(app,{loginPagePath:'unexisting-path' }).then(function(){
+                    loginPlusM.init(app,{loginPagePath:'unexisting-path', successRedirect:'/menu'}).then(function(){
                         done("an error expected");
                     },function(err){
                         done();
@@ -164,21 +164,21 @@ describe('login-plus', function(){
                 });
                 it("reject init if login.jade does not exists",function(done){
                     var app = express();
-                    loginPlusM.init(app,{fileNameLogin:'unexisting-file' }).then(function(){
+                    loginPlusM.init(app,{fileNameLogin:'unexisting-file', successRedirect:'/menu'}).then(function(){
                         done("an error expected");
                     },function(err){
                         done();
                     });
                 });
                 it("serve the internal files",function(done){
-                    createServerGetAgent(opt.param==null?null:{baseUrl:opt.base}).then(function(agent){ 
+                    createServerGetAgent({baseUrl:opt.base}).then(function(agent){ 
                         return agent
                         .get(opt.base+'/auto-login.js')
                         .expect(200, /^"use strict";/);
                     }).then(done.bind(null,null),done);
                 });
                 it("serve the default login page",function(done){
-                    createServerGetAgent(opt.param==null?null:{baseUrl:opt.base}).then(function(agent){ 
+                    createServerGetAgent({baseUrl:opt.base}).then(function(agent){ 
                         return agent
                         .get(opt.base+'/login')
                         .expect(200, /label.*Username/)
@@ -243,11 +243,26 @@ describe('login-plus', function(){
                 console.log.restore();
             };
         });
+        it("detect lack of mandatory opt successRedirect", function(){
+            sinon.stub(console, "log");
+            var loginPlusDep = new loginPlus.Manager;
+            var app = express();
+            expect(function(){
+                loginPlusDep.init(app, {unloggedPath: 'x'});
+            }).to.throwError(/lack.*mandatory/);
+            try{
+                expect(console.log.args).to.eql([
+                    [ 'login-plus lack of mandatory: opts.successRedirect' ]
+                ]);
+            }finally{
+                console.log.restore();
+            };
+        });
         it("warn deprecated use of options", function(){
             sinon.stub(console, "log");
             var loginPlusDep = new loginPlus.Manager;
             var app = express();
-            loginPlusDep.init(app, {unloggedPath: 'x'});
+            loginPlusDep.init(app, {unloggedPath: 'x', successRedirect:'/menu'});
             try{
                 expect(console.log.args).to.eql([
                     [ 'deprecate login-plus.option.unloggedPath' ]

@@ -47,6 +47,9 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
                 res.end('ok');
             });
             var loginPlusManager = new loginPlus.Manager;
+            if(opts.successRedirect == null){
+                opts.successRedirect='/index';
+            }
             loginPlusManager.init(app,opts);
             var validatorStrategy = function(req, username, password, done){
                 if(username=='prueba' && password=='prueba1'){
