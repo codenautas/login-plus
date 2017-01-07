@@ -58,7 +58,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 var loginPlus = new (require('login-plus').Manager);
 
-loginPlus.init(app,{ });
+loginPlus.init(app,{ successRedirect:'/index' });
 
 loginPlus.setValidator(
     function(username, password, done) {
@@ -93,7 +93,7 @@ opts                | predeterminado       | uso
 loginPagePath       | *interno [1]*        | dirección al archivo .jade que tiene el dibujo de la pantalla de login
 loginPageServe      | *motor de jade*      | función que sirve la página de login (usar esta función cuando no se desea un archivo .jade)
 baseUrl             | `/`                  | dirección base de todas las URL
-successRedirect     | `/index`             | dirección a donde debe redirigir la aplicación cuando hay un loggin exitoso
+successRedirect     | *obligatorio*        | dirección a donde debe redirigir la aplicación cuando hay un loggin exitoso
 loginUrlPath        | `/login`             | dirección donde se muestra la página de login
 noLoggedUrlPath     | `/login`             | dirección de la página que se muestra cuando no está logueado si intenta acceder a una página donde se requiere autenticación
 failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
@@ -126,7 +126,7 @@ opts                | default opts         | use
 loginPagePath       | *internal [1]*       | path to the .jade file that contains the login screen
 loginPageServe      | *jade motor*         | function that serves the login page (use this function when a .jade file is not desired)
 baseUrl             | `/`                  | base URL for all other URLs
-successRedirect     | `/index`             | successful login path
+successRedirect     | *mandatory*          | successful login path
 loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in 
 failedLoginUrlPath  | `/login`             | URL to the failing login page
