@@ -51,7 +51,7 @@ app.use(baseUrl+'/public', extensionServeStatic('example/unlogged', {staticExten
 
 var loginPlus = require('../lib/login-plus.js');
 var loginPlusManager = new loginPlus.Manager;
-loginPlusManager.init(app,{allowHttpLogin:true, baseUrl:baseUrl});
+loginPlusManager.init(app,{allowHttpLogin:true, baseUrl:baseUrl,successRedirect:'/menu'});
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
