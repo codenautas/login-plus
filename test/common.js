@@ -68,7 +68,6 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
                 loginPlusManager.setValidatorStrategy(validatorStrategy);
             }
             loginPlusManager.setPasswordChanger(function(req, username, oldPassword, newPassword, done){
-                console.log('intentando chpass ', username, oldPassword, newPassword)
                 if(username=='user' && oldPassword=='prueba1' && newPassword=='prueba2'){
                     spy.globalChPassOk=1;
                     done(null, true);
