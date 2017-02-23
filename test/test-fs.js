@@ -23,18 +23,18 @@ var spy = {globalChPassOk:false};
 
 describe('login-plus with fs', function(){
     [
-        {param:'/'          ,base:''           ,root:true },
-        {param:'/base'      ,base:'/base'      ,root:false},
-        {param:'/base/'     ,base:'/base'      ,root:false},
-        {param:'/doble/base',base:'/doble/base',root:false}, 
-        {param:null         ,base:''           ,root:true },
+        {param:'/'          ,base:''           ,root:true , deltaT:-10000},
+        {param:'/base'      ,base:'/base'      ,root:false, deltaT: 10000},
+        {param:'/base/'     ,base:'/base'      ,root:false, deltaT: 10000},
+        {param:'/doble/base',base:'/doble/base',root:false, deltaT: 10000}, 
+        {param:null         ,base:''           ,root:true , deltaT: 10000},
     ].forEach(function(opt){
         describe('base:'+opt.param, function(){
             describe('loggin in and change password', function(){
                 var agent;
                 before(function (done) {
                     spy.globalChPassOk=false;
-                    createServerGetAgent({baseUrl:opt.base, successRedirect:'/loggedin', fileStore:true},34432).then(function(_agent){ 
+                    createServerGetAgent({baseUrl:opt.base, successRedirect:'/loggedin', fileStore:true, log:{errors:new Date(new Date().getTime()+opt.deltaT)}},34432).then(function(_agent){ 
                         agent=_agent; 
                     }).then(done,done);
                 });

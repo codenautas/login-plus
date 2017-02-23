@@ -178,7 +178,7 @@ describe('login-plus', function(){
                     }).then(done.bind(null,null),done);
                 });
                 it("serve the default login page",function(done){
-                    createServerGetAgent({baseUrl:opt.base}).then(function(agent){ 
+                    createServerGetAgent({baseUrl:opt.base, chPassUrlPath:false}).then(function(agent){ 
                         return agent
                         .get(opt.base+'/login')
                         .expect(200, /label.*Username/)
@@ -221,7 +221,7 @@ describe('login-plus', function(){
                     .expect('set-cookie',/PHPSESSID=oek1/)
                     .expect('ok', done);
                 });
-                it.skip('must serve if php session', function(done){
+                it('must serve if php session', function(done){
                     agent
                     .get(opt.base+'/private/data')
                     .expect('private: data',done);
