@@ -5,7 +5,7 @@
 /*eslint-env node*/
 
 var express = require('express');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 //var assert = require('assert');
@@ -34,7 +34,7 @@ describe('login-plus with fs', function(){
                 var agent;
                 before(function (done) {
                     spy.globalChPassOk=false;
-                    createServerGetAgent({baseUrl:opt.base, successRedirect:'/loggedin', fileStore:true, log:{errors:new Date(new Date().getTime()+opt.deltaT)}},34432).then(function(_agent){ 
+                    createServerGetAgent({baseUrl:opt.base, successRedirect:'/loggedin', log:{errors:new Date(new Date().getTime()+opt.deltaT)}},34432).then(function(_agent){ 
                         agent=_agent; 
                     }).then(done,done);
                 });

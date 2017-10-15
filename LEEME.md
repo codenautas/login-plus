@@ -99,7 +99,6 @@ noLoggedUrlPath     | `/login`             | dirección de la página que se mue
 failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
 failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
 userFieldName       | `username`           | nombre del campo "username"
-fileStore           | false                | si persiste las sesiones en disco (debe especificar `secret`)
 secret              | random key           | clave para las cookies, si se omite se cortará la sesión al cortar el servidor (porque en forma predeterminada la clave secreta es aleatoria y por lo tanto cambia)
 **php**             | false                | si comparte el sistema de login con un sistema en PHP
  .save_path         |                      | lugar donde encontrar las sesiones PHP
@@ -111,7 +110,7 @@ secret              | random key           | clave para las cookies, si se omite
  .formTitle         | `login`              | título del formulario
  .formImg           |                      | imagen a la derecha del formulario
  .autoLogin         | false                | si permite el autologuea desde la URL especificando los parámetros `?u=user&p=pass&a=1`
-
+store.module        | null                 | functión de devuelve el constructor apara almacenar el los datos de sesión (recibe como parámetro la instancia de express-session)
 
 Los middlewares a partir de ahí pueden acceder a los datos de sesión 
 que están en `false`.
@@ -131,7 +130,6 @@ loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in 
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
-fileStore           | false                | persist session in file system
 secret              | random key           | keys for cookies
 **php**             | false                | hibrid login system mergin with PHP
  .save_path         |                      | path of PHP session files
@@ -143,7 +141,7 @@ secret              | random key           | keys for cookies
  .formTitle         | `login`              | form title
  .formImg           |                      | form image
  .autoLogin         | false                | enable direct login from URL with `?u=user&p=pass&a=1`
-
+store.module        | null                 | function that returns the constructor of the module to store sessions (it receive the express-session instance as first argument)
 
 From this point on, the middlewares can access the data session contained in `req.user`.
 

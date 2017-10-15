@@ -5,7 +5,7 @@
 /*eslint-env node*/
 
 var express = require('express');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 //var assert = require('assert');
@@ -154,6 +154,17 @@ describe('login-plus', function(){
             });
             describe("init",function(){
                 var loginPlusM = new loginPlus.Manager;
+                it("reject init if cookie-parser is setted",function(done){
+                    var app = express();
+                    app.use(require('cookie-parser')());
+                    Promise.resolve().then(function(){
+                        return loginPlusM.init(app,{successRedirect:'/menu'})
+                    }).then(function(){
+                        done("an error expected");
+                    },function(err){
+                        done();
+                    });
+                });
                 it("reject init if the path for login.jade does not exists",function(done){
                     var app = express();
                     loginPlusM.init(app,{loginPagePath:'unexisting-path', successRedirect:'/menu'}).then(function(){
@@ -171,7 +182,7 @@ describe('login-plus', function(){
                     });
                 });
                 it("serve the internal files",function(done){
-                    createServerGetAgent({baseUrl:opt.base}).then(function(agent){ 
+                    createServerGetAgent({baseUrl:opt.base, withSomeMiddleware:true, successRedirect:'/menu'}).then(function(agent){ 
                         return agent
                         .get(opt.base+'/auto-login.js')
                         .expect(200, /^"use strict";/);

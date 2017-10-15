@@ -26,7 +26,17 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
     function createServerGetAgent(opts) {
         return new Promise(function(resolve, reject){
             var app = express();
-            app.use(cookieParser());
+            var loginPlusManager = new loginPlus.Manager;
+            if(opts && !opts.withSomeMiddleware){
+                opts.allowHttpLogin=true;
+                if(opts.successRedirect == null){
+                    opts.successRedirect='/index';
+                }
+                loginPlusManager.initCookieParser(app,opts,cookieParser);
+            }
+            if(opts.withSomeMiddleware){
+                app.use(function(req,res,next){ next(); });
+            }
             var concat = require('concat-stream');
             app.use(bodyParser.urlencoded({extended:true}));
             if("show raw body"){
@@ -39,17 +49,10 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
             }
             var opts2 = opts||{};
             opts2.baseUrl = opts2.baseUrl||'';
-            if(opts){
-                opts.allowHttpLogin=true;
-            }
             app.get(opts2.baseUrl+'/php-set-cookie', function(req,res){
                 res.cookie('PHPSESSID', 'oek1ort6vbqdd7374eft6adv61');
                 res.end('ok');
             });
-            var loginPlusManager = new loginPlus.Manager;
-            if(opts.successRedirect == null){
-                opts.successRedirect='/index';
-            }
             loginPlusManager.init(app,opts);
             var validatorStrategy = function(req, username, password, done){
                 if(username=='prueba' && password=='prueba1'){
