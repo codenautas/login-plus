@@ -42,18 +42,17 @@ describe('login-plus', function(){
                     }).then(done,done);
                 });
                 it('must redirect if not logged in', function(done){
+                    console.log('fetching',opt.base+'/private/data.txt?here=7');
                     agent
-                    .get(opt.base+'/private/data')
-                    // .get(opt.base+'/algo.txt')
-                    .expect('location', opt.base+'/login')
-                    .expect(302, /Redirecting to \/((doble\/)?base\/)?login/, done);
+                    .get(opt.base+'/private/data.txt?here=7')
+                    .expect('location', '../login')
+                    .expect(302, /Redirecting to \.\.\/login/, done);
                 });
                 it('must redirect if not logged in and want chpass', function(done){
                     agent
                     .get(opt.base+'/chpass')
-                    // .get(opt.base+'/algo.txt')
-                    .expect('location', opt.base+'/login')
-                    .expect(302, /Redirecting to \/((doble\/)?base\/)?login/, done);
+                    .expect('location', 'login')
+                    .expect(302, /Redirecting to login/, done);
                 });
                 it('must get login page when not logged in', function(done){
                     agent
@@ -63,8 +62,8 @@ describe('login-plus', function(){
                 it('must redirect to root if not logged in', function(done){
                     agent
                     .get(opt.base+'/this/and/this/algo.txt')
-                    .expect('location', opt.base+'/login')
-                    .expect(302, /Redirecting to \/((doble\/)?base\/)?login/, done);
+                    .expect('location', '../../../login')
+                    .expect(302, /Redirecting to \.\.\/\.\.\/\.\.\/login/, done);
                 });
                 if(!opt.root){
                     it('must fail outside the base', function(done){
@@ -112,7 +111,7 @@ describe('login-plus', function(){
                         // console.log('****');
                         //console.log('set-cookies',res.headers["set-cookie"]);
                     })
-                    .expect(302, /Redirecting to \/.*index/, done);
+                    .expect(302, /Redirecting to \.\/index/, done);
                 });
                 it('must serve data if logged', function(done){
                     agent
@@ -139,7 +138,7 @@ describe('login-plus', function(){
                 it('if the login page was visited then redirect to successful url', function(done){
                     agent
                     .get(opt.base+'/login')
-                    .expect(302, /Redirecting to \/.*already*/, done);
+                    .expect(302, /Redirecting to \.\/already*/, done);
                 });
                 it('if the logout page was visited then unlog', function(done){
                     agent
@@ -147,8 +146,8 @@ describe('login-plus', function(){
                     .end(function(){
                         agent
                         .get(opt.base+'/private/data3')
-                        .expect('location', opt.base+'/login')
-                        .expect(302, /Redirecting to \/.*login/, done);
+                        .expect('location', '../login')
+                        .expect(302, /Redirecting to \.\.\/login/, done);
                     });
                 });
             });
@@ -223,8 +222,8 @@ describe('login-plus', function(){
                 it('must reject if php session is not active', function(done){
                     agent
                     .get(opt.base+'/private/data')
-                    .expect('location', opt.base+'/login')
-                    .expect(302, /Redirecting to \/((doble\/)?base\/)?login/, done);
+                    .expect('location', '../login')
+                    .expect(302, /Redirecting to \.\.\/login/, done);
                 });
                 it('must set cookie for test', function(done){
                     agent

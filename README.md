@@ -77,7 +77,6 @@ loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
-fileStore           | false                | persist session in file system
 secret              | random key           | keys for cookies
 **php**             | false                | hibrid login system mergin with PHP
  .save_path         |                      | path of PHP session files
@@ -89,7 +88,7 @@ secret              | random key           | keys for cookies
  .formTitle         | `login`              | form title
  .formImg           |                      | form image
  .autoLogin         | false                | enable direct login from URL with `?u=user&p=pass&a=1`
-
+store.module        | null                 | function that returns the constructor of the module to store sessions (it receive the express-session instance as first argument)
 
 From this point on, the middlewares can access the data session contained in `req.user`.
 

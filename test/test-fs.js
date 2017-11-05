@@ -53,7 +53,7 @@ describe('login-plus with fs', function(){
                     .expect(function(res){
                          //console.log('****', res);
                     })
-                    .expect(302, /Redirecting to \/.*loggedin/, done);
+                    .expect(302, /Redirecting to \.\/loggedin/, done);
                 });
                 it('must reject erroneous change password', function(done){
                     spy.globalChPassOk=-2;
@@ -64,7 +64,7 @@ describe('login-plus with fs', function(){
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(2);
                     })
-                    .expect(302, /Redirecting to \/.*chpass/, done);
+                    .expect(302, /Redirecting to \.\/chpass/, done);
                 });
                 it('must receive change password', function(done){
                     spy.globalChPassOk=-1;
@@ -75,7 +75,7 @@ describe('login-plus with fs', function(){
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(1);
                     })
-                    .expect(302, /Redirecting to \/.*login/, done);
+                    .expect(302, /Redirecting to \.\/login/, done);
                 });
                 it('must redirect to success page in another login', function(done){
                     agent
@@ -85,7 +85,7 @@ describe('login-plus with fs', function(){
                     .expect(function(res){
                          //console.log('****', res);
                     })
-                    .expect(302, /Redirecting to \/.*loggedin/, done);
+                    .expect(302, /Redirecting to \.\/loggedin/, done);
                 });
                 it('must detect change password error', function(done){
                     spy.globalChPassOk=-4;
@@ -96,7 +96,7 @@ describe('login-plus with fs', function(){
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(-4);
                     })
-                    .expect(302, /Redirecting to \/.*chpass/, done);
+                    .expect(302, /Redirecting to \.\/chpass/, done);
                 });
                 it('must detect change password error', function(done){
                     spy.globalChPassOk=-3;
@@ -107,7 +107,7 @@ describe('login-plus with fs', function(){
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(3);
                     })
-                    .expect(302, /Redirecting to \/.*chpass/, done);
+                    .expect(302, /Redirecting to \.\/chpass/, done);
                 });
             });
         });
