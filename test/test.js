@@ -180,21 +180,21 @@ describe('login-plus', function(){
                         done();
                     });
                 });
-                it("serve the internal files",function(done){
+                it("serve the internal files",function(){
                     createServerGetAgent({baseUrl:opt.base, withSomeMiddleware:true, successRedirect:'/menu'}).then(function(agent){ 
                         return agent
                         .get(opt.base+'/auto-login.js')
                         .expect(200, /^"use strict";/);
-                    }).then(done.bind(null,null),done);
+                    });
                 });
-                it("serve the default login page",function(done){
-                    createServerGetAgent({baseUrl:opt.base, chPassUrlPath:false}).then(function(agent){ 
+                it("serve the default login page",function(){
+                    return createServerGetAgent({baseUrl:opt.base, chPassUrlPath:false}).then(function(agent){ 
                         return agent
                         .get(opt.base+'/login')
                         .expect(200, /label.*Username/)
                         .expect(200, /name="username"/)
                         .expect(200, /id="password".*name="password"/);
-                    }).then(done.bind(null,null),done);
+                    });
                 });
                 it("serve the parametrized default login page",function(done){
                     var loginForm=changing(loginPlus.spanishLoginForm,{formImg:'this.png'});

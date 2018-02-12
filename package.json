@@ -54,7 +54,7 @@
   },
   "scripts": {
     "test": "mocha --reporter spec --bail --check-leaks --exit test/test*.js",
-    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --exit --reporter spec --check-leaks test/test*.js",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --exit --reporter spec --check-leaks --globals __core-js_shared__ test/test*.js",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --exit --check-leaks test/test*.js",
     "start": "node example/server.js"
   },
