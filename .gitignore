@@ -29,3 +29,5 @@ node_modules
 local-*
 *-local.*
 sessions/*.j*
+
+package-lock.json
