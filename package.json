@@ -50,7 +50,7 @@
     "php-session": "~0.1.0"
   },
   "engines": {
-    "node": ">= 6.0"
+    "node": ">= 8.9"
   },
   "scripts": {
     "test": "mocha --reporter spec --bail --check-leaks --globals __core-js_shared__ --exit test/test*.js",
