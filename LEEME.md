@@ -94,6 +94,7 @@ loginPagePath       | *interno [1]*        | dirección al archivo .jade que tie
 loginPageServe      | *motor de jade*      | función que sirve la página de login (usar esta función cuando no se desea un archivo .jade)
 baseUrl             | `/`                  | dirección base de todas las URL
 successRedirect     | *obligatorio*        | dirección a donde debe redirigir la aplicación cuando hay un loggin exitoso
+successReturns      | false                | indica si debe volver a la URL anterior en caso de que al login se haya llegado redireccionando         
 loginUrlPath        | `/login`             | dirección donde se muestra la página de login
 noLoggedUrlPath     | `/login`             | dirección de la página que se muestra cuando no está logueado si intenta acceder a una página donde se requiere autenticación
 failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
@@ -101,15 +102,15 @@ failedLoginUrlPath  | `/login`             | dirección de la página que se mue
 userFieldName       | `username`           | nombre del campo "username"
 secret              | random key           | clave para las cookies, si se omite se cortará la sesión al cortar el servidor (porque en forma predeterminada la clave secreta es aleatoria y por lo tanto cambia)
 **php**             | false                | si comparte el sistema de login con un sistema en PHP
- .save_path         |                      | lugar donde encontrar las sesiones PHP
- .varLogged         |                      | variable de `$SESSION` que indica si el usuario está logueado
+.save_path          |                      | lugar donde encontrar las sesiones PHP
+.varLogged          |                      | variable de `$SESSION` que indica si el usuario está logueado
 **loginForm**       |                      | opciones del formulario de login
- .usernameLabel     | `Username`           | texto para el campo usuario
- .passwordLabel     | `Password`           | texto para el campo password
- .buttonLabel       | `Log In`             | texto del botón entrar
- .formTitle         | `login`              | título del formulario
- .formImg           |                      | imagen a la derecha del formulario
- .autoLogin         | false                | si permite el autologuea desde la URL especificando los parámetros `?u=user&p=pass&a=1`
+.usernameLabel      | `Username`           | texto para el campo usuario
+.passwordLabel      | `Password`           | texto para el campo password
+.buttonLabel        | `Log In`             | texto del botón entrar
+.formTitle          | `login`              | título del formulario
+.formImg            |                      | imagen a la derecha del formulario
+.autoLogin          | false                | si permite el autologuea desde la URL especificando los parámetros `?u=user&p=pass&a=1`
 store.module        | null                 | functión de devuelve el constructor apara almacenar el los datos de sesión (recibe como parámetro la instancia de express-session)
 
 Los middlewares a partir de ahí pueden acceder a los datos de sesión 
@@ -126,21 +127,22 @@ loginPagePath       | *internal [1]*       | path to the .jade file that contain
 loginPageServe      | *jade motor*         | function that serves the login page (use this function when a .jade file is not desired)
 baseUrl             | `/`                  | base URL for all other URLs
 successRedirect     | *mandatory*          | successful login path
+successReturns      | false                | returns to previous path when login
 loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in 
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
 secret              | random key           | keys for cookies
 **php**             | false                | hibrid login system mergin with PHP
- .save_path         |                      | path of PHP session files
- .varLogged         |                      | `$SESSION` variable name for login control
+.save_path          |                      | path of PHP session files
+.varLogged          |                      | `$SESSION` variable name for login control
 **loginForm**       |                      | opciones del formulario de login
- .usernameLabel     | `Username`           | username label
- .passwordLabel     | `Password`           | password label
- .buttonLabel       | `Log In`             | button label
- .formTitle         | `login`              | form title
- .formImg           |                      | form image
- .autoLogin         | false                | enable direct login from URL with `?u=user&p=pass&a=1`
+.usernameLabel      | `Username`           | username label
+.passwordLabel      | `Password`           | password label
+.buttonLabel        | `Log In`             | button label
+.formTitle          | `login`              | form title
+.formImg            |                      | form image
+.autoLogin          | false                | enable direct login from URL with `?u=user&p=pass&a=1`
 store.module        | null                 | function that returns the constructor of the module to store sessions (it receive the express-session instance as first argument)
 
 From this point on, the middlewares can access the data session contained in `req.user`.

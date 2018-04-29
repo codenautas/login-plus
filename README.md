@@ -73,21 +73,22 @@ loginPagePath       | *internal [1]*       | path to the .jade file that contain
 loginPageServe      | *jade motor*         | function that serves the login page (use this function when a .jade file is not desired)
 baseUrl             | `/`                  | base URL for all other URLs
 successRedirect     | *mandatory*          | successful login path
+successReturns      | false                | returns to previous path when login
 loginUrlPath        | `/login`             | URL to the login page
 noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
 secret              | random key           | keys for cookies
 **php**             | false                | hibrid login system mergin with PHP
- .save_path         |                      | path of PHP session files
- .varLogged         |                      | `$SESSION` variable name for login control
+.save_path          |                      | path of PHP session files
+.varLogged          |                      | `$SESSION` variable name for login control
 **loginForm**       |                      | opciones del formulario de login
- .usernameLabel     | `Username`           | username label
- .passwordLabel     | `Password`           | password label
- .buttonLabel       | `Log In`             | button label
- .formTitle         | `login`              | form title
- .formImg           |                      | form image
- .autoLogin         | false                | enable direct login from URL with `?u=user&p=pass&a=1`
+.usernameLabel      | `Username`           | username label
+.passwordLabel      | `Password`           | password label
+.buttonLabel        | `Log In`             | button label
+.formTitle          | `login`              | form title
+.formImg            |                      | form image
+.autoLogin          | false                | enable direct login from URL with `?u=user&p=pass&a=1`
 store.module        | null                 | function that returns the constructor of the module to store sessions (it receive the express-session instance as first argument)
 
 From this point on, the middlewares can access the data session contained in `req.user`.
