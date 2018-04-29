@@ -151,6 +151,85 @@ describe('login-plus', function(){
                     });
                 });
             });
+            describe('to log using successReturns', function(){
+                var agent;
+                before(function (done) {
+                    createServerGetAgent({
+                        baseUrl:opt.base, 
+                        loginPageServe:simpleLoginPageServe, 
+                        userFieldName:'userFieldName',
+                        alreadyLoggedIn:'/already-logged-in',
+                        successReturns:true
+                    }).then(function(_agent){ 
+                        agent=_agent; 
+                    }).then(done,done);
+                });
+                /*
+                it('must set cookie', function(done){
+                    agent.get(opt.base+'/login')
+                    .expect('set-cookie',/connect.sid=/)
+                    .expect(function(res){
+                        // console.dir(res,{depth:0});
+                        // console.log(res.headers);
+                        // console.log('set-cookies',res.headers["set-cookie"]);
+                    })
+                    .end(done);
+                });
+                */
+                it('must receive redirect to previous', function(done){
+                    agent
+                    .get(opt.base+'/this-page').end(function(){
+                        agent
+                        .post(opt.base+'/login')
+                        .type('form')
+                        .send({username:'prueba', password:'prueba1'})
+                        .expect(function(res){
+                            // console.log('****');
+                            //console.log('set-cookies',res.headers["set-cookie"]);
+                        })
+                        .expect(302, /Redirecting to .*\/this-page/, done);
+                    })
+                });
+                /*
+                it('must serve data if logged', function(done){
+                    agent
+                    .get(opt.base+'/private/data')
+                    .expect('private: data',done);
+                });
+                it('must serve data if logged 2', function(done){
+                    agent
+                    .get(opt.base+'/private/data2')
+                    .expect('private: data2',done);
+                });
+                it('must serve whoami', function(done){
+                    agent
+                    .get(opt.base+'/whoami')
+                    .expect('I am: {"userFieldName":"prueba","userData":"data-user"}',done);
+                });
+                if(!opt.root){
+                    it('must fail outside the base', function(done){
+                        agent
+                        .get('/private/algo.txt')
+                        .expect(404, done);
+                    });
+                };
+                it('if the login page was visited then redirect to successful url', function(done){
+                    agent
+                    .get(opt.base+'/login')
+                    .expect(302, /Redirecting to \.\/already/, done);
+                });
+                it('if the logout page was visited then unlog', function(done){
+                    agent
+                    .get(opt.base+'/logout')
+                    .end(function(){
+                        agent
+                        .get(opt.base+'/private/data3')
+                        .expect('location', '../login')
+                        .expect(302, /Redirecting to \.\.\/login/, done);
+                    });
+                });
+                */
+            });
             describe("init",function(){
                 var loginPlusM = new loginPlus.Manager;
                 it("reject init if cookie-parser is setted",function(done){

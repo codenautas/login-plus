@@ -1,7 +1,7 @@
 {
   "name": "login-plus",
   "description": "login service for express",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "license": "MIT",
   "repository": "codenautas/login-plus",
@@ -25,20 +25,20 @@
     "session-file-store": "~1.2.0",
     "best-globals": "~0.10.4",
     "ensure-login": "~0.1.2",
-    "mini-tools": "~0.3.22"
+    "mini-tools": "~1.0.0"
   },
   "devDependencies": {
     "body-parser": "~1.18.2",
-    "concat-stream": "~1.6.0",
+    "concat-stream": "~1.6.2",
     "cookie-parser": "~1.4.3",
     "expect.js": "~0.3.1",
-    "express": "~4.16.2",
+    "express": "~4.16.3",
     "istanbul": "~0.4.5",
-    "pug": "~2.0.0-rc.4",
-    "mocha": "~5.0.0",
+    "pug": "~2.0.3",
+    "mocha": "~5.1.1",
     "php-session": "~0.1.0",
     "read-yaml-promise": "~1.0.2",
-    "sinon": "~4.3.0",
+    "sinon": "~4.5.0",
     "stylus": "~0.54.5",
     "supertest": "~3.0.0",
     "ajax-best-promise": "~0.3.4",
@@ -53,7 +53,7 @@
     "node": ">= 4.0"
   },
   "scripts": {
-    "test": "mocha --reporter spec --bail --check-leaks --exit test/test*.js",
+    "test": "mocha --reporter spec --bail --check-leaks --globals __core-js_shared__ --exit test/test*.js",
     "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --exit --reporter spec --check-leaks --globals __core-js_shared__ test/test*.js",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --exit --check-leaks test/test*.js",
     "start": "node example/server.js"
