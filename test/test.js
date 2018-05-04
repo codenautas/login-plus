@@ -153,7 +153,7 @@ describe('login-plus', function(){
             });
             describe('to log using successReturns', function(){
                 var agent;
-                before(function (done) {
+                beforeEach(function (done) {
                     createServerGetAgent({
                         baseUrl:opt.base, 
                         loginPageServe:simpleLoginPageServe, 
@@ -164,18 +164,6 @@ describe('login-plus', function(){
                         agent=_agent; 
                     }).then(done,done);
                 });
-                /*
-                it('must set cookie', function(done){
-                    agent.get(opt.base+'/login')
-                    .expect('set-cookie',/connect.sid=/)
-                    .expect(function(res){
-                        // console.dir(res,{depth:0});
-                        // console.log(res.headers);
-                        // console.log('set-cookies',res.headers["set-cookie"]);
-                    })
-                    .end(done);
-                });
-                */
                 it('must receive redirect to previous', function(done){
                     agent
                     .get(opt.base+'/this-page').end(function(){
@@ -190,45 +178,48 @@ describe('login-plus', function(){
                         .expect(302, /Redirecting to .*\/this-page/, done);
                     })
                 });
-                /*
-                it('must serve data if logged', function(done){
+                it('must not receive redirect to previous with get resource', function(done){
                     agent
-                    .get(opt.base+'/private/data')
-                    .expect('private: data',done);
-                });
-                it('must serve data if logged 2', function(done){
-                    agent
-                    .get(opt.base+'/private/data2')
-                    .expect('private: data2',done);
-                });
-                it('must serve whoami', function(done){
-                    agent
-                    .get(opt.base+'/whoami')
-                    .expect('I am: {"userFieldName":"prueba","userData":"data-user"}',done);
-                });
-                if(!opt.root){
-                    it('must fail outside the base', function(done){
+                    .get(opt.base+'/this-img.png').end(function(){
                         agent
-                        .get('/private/algo.txt')
-                        .expect(404, done);
-                    });
-                };
-                it('if the login page was visited then redirect to successful url', function(done){
-                    agent
-                    .get(opt.base+'/login')
-                    .expect(302, /Redirecting to \.\/already/, done);
+                        .post(opt.base+'/login')
+                        .type('form')
+                        .send({username:'prueba', password:'prueba1'})
+                        .expect(function(res){
+                            // console.log('****');
+                            //console.log('set-cookies',res.headers["set-cookie"]);
+                        })
+                        .expect(302, /Redirecting to .*\/index/, done);
+                    })
                 });
-                it('if the logout page was visited then unlog', function(done){
+                it('must receive redirect to previous with parameters', function(done){
                     agent
-                    .get(opt.base+'/logout')
-                    .end(function(){
+                    .get(opt.base+'/this-page?factor=3.141').end(function(){
                         agent
-                        .get(opt.base+'/private/data3')
-                        .expect('location', '../login')
-                        .expect(302, /Redirecting to \.\.\/login/, done);
-                    });
+                        .post(opt.base+'/login')
+                        .type('form')
+                        .send({username:'prueba', password:'prueba1'})
+                        .expect(function(res){
+                            // console.log('****');
+                            //console.log('set-cookies',res.headers["set-cookie"]);
+                        })
+                        .expect(302, /Redirecting to .*\/this-page\?factor=3\.141/, done);
+                    })
                 });
-                */
+                it('must go to default if receives login', function(done){
+                    agent
+                    .get(opt.base+'/login').end(function(){
+                        agent
+                        .post(opt.base+'/login')
+                        .type('form')
+                        .send({username:'prueba', password:'prueba1'})
+                        .expect(function(res){
+                            // console.log('****');
+                            //console.log('set-cookies',res.headers["set-cookie"]);
+                        })
+                        .expect(302, /Redirecting to .*\/index/, done);
+                    })
+                });
             });
             describe("init",function(){
                 var loginPlusM = new loginPlus.Manager;
