@@ -13,7 +13,7 @@ var bodyParser = require('body-parser');
 var fs = require('fs-promise');
 var pg = require('pg-promise-strict');
 var readYaml = require('read-yaml-promise');
-var extensionServeStatic = require('extension-serve-static');
+var serveContent = require('serve-content');
 var MiniTools = require('mini-tools');
 var bestGlobals = require('best-globals');
 var crypto = require('crypto');
@@ -47,7 +47,7 @@ var baseUrl=''; // '/test-lp';
 
 app.use(baseUrl+'/public', MiniTools.serveJade('example/unlogged',true));
 app.use(baseUrl+'/public', MiniTools.serveStylus('example/unlogged',true));
-app.use(baseUrl+'/public', extensionServeStatic('example/unlogged', {staticExtensions:validExts}));
+app.use(baseUrl+'/public', serveContent('example/unlogged', {allowedExts:validExts}));
 
 var loginPlus = require('../lib/login-plus.js');
 var loginPlusManager = new loginPlus.Manager;
@@ -64,18 +64,18 @@ app.use(function(req,res,next){
 // probar con http://localhost:12348/ajax-example
 app.use(baseUrl+'/',MiniTools.serveJade('example/client',true));
 app.use(baseUrl+'/',MiniTools.serveStylus('example/client',true));
-app.use(baseUrl+'/',extensionServeStatic('./node_modules/ajax-best-promise/bin', {staticExtensions:['js']}));
+app.use(baseUrl+'/',serveContent('./node_modules/ajax-best-promise/bin', {allowedExts:['js']}));
 
 var serveErr = MiniTools.serveErr;
 
-var mime = extensionServeStatic.mime;
+var mime = serveContent.mime;
 
-app.use(baseUrl+'/',extensionServeStatic('./node_modules/ajax-best-promise/bin', {staticExtensions:'js'}));
+app.use(baseUrl+'/',serveContent('./node_modules/ajax-best-promise/bin', {allowedExts:'js'}));
 
-app.use(baseUrl+'/',extensionServeStatic('./client2', {
+app.use(baseUrl+'/',serveContent('./client2', {
     index: ['index.html'], 
     extensions:[''], 
-    staticExtensions:validExts
+    allowedExts:validExts
 }));
 
 var actualConfig;
