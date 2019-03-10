@@ -27,7 +27,7 @@
     "passport": "~0.4.0",
     "passport-local": "~1.0.0",
     "session-file-store": "~1.2.0",
-    "best-globals": "~0.10.10",
+    "best-globals": "~0.10.13",
     "ensure-login": "~0.1.4",
     "mini-tools": "~1.0.6",
     "regexplicit": "~0.1.3"
@@ -43,11 +43,11 @@
     "mocha": "~6.0.2",
     "php-session": "~0.1.0",
     "read-yaml-promise": "~1.0.2",
-    "sinon": "~7.2.6",
+    "sinon": "~7.2.7",
     "stylus": "~0.54.5",
-    "supertest": "~3.4.2",
+    "supertest": "~4.0.0",
     "ajax-best-promise": "~0.3.7",
-    "pg-promise-strict": "~0.4.18",
+    "pg-promise-strict": "~1.0.1",
     "self-explain": "~0.10.18",
     "serve-content": "~0.3.11"
   },
@@ -59,10 +59,8 @@
   },
   "scripts": {
     "test": "mocha --reporter spec --bail --check-leaks --globals __core-js_shared__ --exit test/test*.js",
-    "test-ci": "node node_modules/nyc/bin/nyc --reporter=lcov --reporter=text-lcov node_modules/mocha/bin/_mocha --exit --check-leaks test/",
+    "test-ci": "nyc node_modules/mocha/bin/_mocha --report lcovonly --exit --check-leaks --globals __core-js_shared__ test/",
     "test-cov": "node node_modules/nyc/bin/nyc mocha --exit",
-    "x-test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --exit --reporter spec --check-leaks --globals __core-js_shared__ test/test*.js",
-    "x-test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --exit --check-leaks test/test*.js",
     "start": "node example/server.js"
   },
   "qa-control": {
