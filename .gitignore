@@ -31,3 +31,4 @@ local-*
 sessions/*.j*
 
 package-lock.json
+.nyc_output
