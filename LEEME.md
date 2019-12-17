@@ -1,4 +1,4 @@
-<!--multilang v0 es:LEEME.md en:README.md  -->
+<!--multilang v0 es:LEEME.md en:README.md -->
 # login-plus
 <!--lang:es-->
 servicio de login para aplicaciones basadas en express
@@ -96,7 +96,7 @@ successReturns      | false                | indica si debe volver a la URL ante
 loginUrlPath        | `/login`             | dirección donde se muestra la página de login
 noLoggedUrlPath     | `/login`             | dirección de la página que se muestra cuando no está logueado si intenta acceder a una página donde se requiere autenticación
 failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
-failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
+logoutRedirect      | noLoggedUrlPath      | dirección de la página a la que se redirige después de entrar a /logout
 userFieldName       | `username`           | nombre del campo "username"
 secret              | random key           | clave para las cookies, si se omite se cortará la sesión al cortar el servidor (porque en forma predeterminada la clave secreta es aleatoria y por lo tanto cambia)
 **php**             | false                | si comparte el sistema de login con un sistema en PHP
