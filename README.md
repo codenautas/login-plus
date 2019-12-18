@@ -29,10 +29,8 @@ also available in:
 
 var express = require('express');
 var app = express();
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 
 var loginPlus = new (require('login-plus').Manager);
