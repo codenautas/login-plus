@@ -97,6 +97,8 @@ failedLoginUrlPath  | `/login`             | dirección de la página que se mue
 logoutRedirect      | noLoggedUrlPath      | dirección de la página a la que se redirige después de entrar a /logout
 userFieldName       | `username`           | nombre del campo "username"
 secret              | random key           | clave para las cookies, si se omite se cortará la sesión al cortar el servidor (porque en forma predeterminada la clave secreta es aleatoria y por lo tanto cambia)
+alreadyLoggedIn     | successRedirect      | redirección cuando se accede a `/login` y ya estaba logueado
+skipCheckAlreadyLoggedIn | false           | permite que `/login` muestre la página de logín aún cuando ya esté logueado
 **php**             | false                | si comparte el sistema de login con un sistema en PHP
 .save_path          |                      | lugar donde encontrar las sesiones PHP
 .varLogged          |                      | variable de `$SESSION` que indica si el usuario está logueado
@@ -129,6 +131,8 @@ noLoggedUrlPath     | `/login`             | URL to the unlogged page where the 
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
 secret              | random key           | keys for cookies
+alreadyLoggedIn     | successRedirect      | `/login` redirection when is already logged
+skipCheckAlreadyLoggedIn | false           | allows `/login` redirects to login page even if the user is already logged
 **php**             | false                | hibrid login system mergin with PHP
 .save_path          |                      | path of PHP session files
 .varLogged          |                      | `$SESSION` variable name for login control

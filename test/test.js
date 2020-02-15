@@ -307,6 +307,46 @@ describe('login-plus', function(){
                     .expect('private: data',done);
                 });
             });
+            describe('skipCheckAlreadyLoggedIn', function(){
+                var agent;
+                before(function (done) {
+                    createServerGetAgent({
+                        baseUrl:opt.base, 
+                        loginPageServe:simpleLoginPageServe, 
+                        userFieldName:'userFieldName',
+                        alreadyLoggedIn:'/already-logged-in',
+                        skipCheckAlreadyLoggedIn:true
+                    }).then(function(_agent){ 
+                        agent=_agent; 
+                    }).then(done,done);
+                });
+                it('must set cookie', function(done){
+                    agent.get(opt.base+'/login')
+                    .expect('set-cookie',/connect.sid=/)
+                    .expect(function(res){
+                        // console.dir(res,{depth:0});
+                        // console.log(res.headers);
+                        // console.log('set-cookies',res.headers["set-cookie"]);
+                    })
+                    .end(done);
+                });
+                it('must receive login parameters', function(done){
+                    agent
+                    .post(opt.base+'/login')
+                    .type('form')
+                    .send({username:'prueba', password:'prueba1'})
+                    .expect(function(res){
+                        // console.log('****');
+                        //console.log('set-cookies',res.headers["set-cookie"]);
+                    })
+                    .expect(302, /Redirecting to \.\/index/, done);
+                });
+                it('skips redirect to successful url', function(done){
+                    agent
+                    .get(opt.base+'/login')
+                    .expect(200, /<div>The login page/, done);
+                });
+            });
         });
     });
     describe("warnings", function(){

@@ -75,6 +75,8 @@ noLoggedUrlPath     | `/login`             | URL to the unlogged page where the 
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
 secret              | random key           | keys for cookies
+alreadyLoggedIn     | successRedirect      | `/login` redirection when is already logged
+skipCheckAlreadyLoggedIn | false           | allows `/login` redirects to login page even if the user is already logged
 **php**             | false                | hibrid login system mergin with PHP
 .save_path          |                      | path of PHP session files
 .varLogged          |                      | `$SESSION` variable name for login control
