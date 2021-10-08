@@ -10,7 +10,7 @@ login service for express
 ![stable](https://img.shields.io/badge/stability-stable-brightgreen.svg)
 [![npm-version](https://img.shields.io/npm/v/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![downloads](https://img.shields.io/npm/dm/login-plus.svg)](https://npmjs.org/package/login-plus)
-[![build](https://img.shields.io/travis/codenautas/login-plus/master.svg)](https://travis-ci.org/codenautas/login-plus)
+[![build](https://img.shields.io/travis/codenautas/login-plus/master.svg)](https://travis-ci.com/codenautas/login-plus)
 [![coverage](https://img.shields.io/coveralls/codenautas/login-plus/master.svg)](https://coveralls.io/r/codenautas/login-plus)
 [![dependencies](https://img.shields.io/david/codenautas/login-plus.svg)](https://david-dm.org/codenautas/login-plus)
 
