@@ -98,6 +98,17 @@ describe('login-plus with fs', function(){
                     })
                     .expect(302, /Redirecting to \.\/chpass/, done);
                 });
+                it('must detect non match pass error', function(done){
+                    spy.globalChPassOk=-44;
+                    agent
+                    .post(opt.base+'/chpass')
+                    .type('form')
+                    .send({oldPassword:'prueba1', newPassword:'NonMatching1!', repPassword:'NonMatching2!'})
+                    .expect(function(res){
+                        expect(spy.globalChPassOk).to.eql(-44); // do not enter in setPasswordChanger
+                    })
+                    .expect(302, /Redirecting to \.\/chpass/, done);
+                });
                 it('must detect change password error', function(done){
                     spy.globalChPassOk=-3;
                     agent
