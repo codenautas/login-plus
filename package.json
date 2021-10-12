@@ -60,7 +60,6 @@
   "scripts": {
     "test": "mocha --reporter spec --bail --check-leaks --globals __core-js_shared__ --exit test/test*.js",
     "test-ci": "nyc node_modules/mocha/bin/_mocha --report lcovonly --exit --check-leaks --globals __core-js_shared__ test/",
-    "x-test-cov": "node node_modules/nyc/bin/nyc mocha --exit",
     "test-cov": "nyc mocha --exit test/test*.js && nyc report --reporter=lcov",
     "start": "node example/server.js"
   },

@@ -28,5 +28,5 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm run test-ci
+    - run: npm run test-cov
     - run: npm install coveralls@2.11.9 && cat ./coverage/lcov.info | coveralls
