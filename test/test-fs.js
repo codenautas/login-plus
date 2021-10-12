@@ -60,7 +60,7 @@ describe('login-plus with fs', function(){
                     agent
                     .post(opt.base+'/chpass')
                     .type('form')
-                    .send({oldPassword:'bad_pass', newPassword:'prueba2'})
+                    .send({oldPassword:'bad_pass', newPassword:'prueba2', repPassword:'prueba2'})
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(2);
                     })
@@ -71,7 +71,7 @@ describe('login-plus with fs', function(){
                     agent
                     .post(opt.base+'/chpass')
                     .type('form')
-                    .send({oldPassword:'prueba1', newPassword:'prueba2'})
+                    .send({oldPassword:'prueba1', newPassword:'prueba2', repPassword:'prueba2'})
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(1);
                     })
@@ -81,7 +81,7 @@ describe('login-plus with fs', function(){
                     agent
                     .post(opt.base+'/login')
                     .type('form')
-                    .send({username2:'prueba', password:'prueba1'})
+                    .send({username2:'prueba', password:'prueba1', repPassword:'prueba1'})
                     .expect(function(res){
                          //console.log('****', res);
                     })
@@ -92,7 +92,7 @@ describe('login-plus with fs', function(){
                     agent
                     .post(opt.base+'/chpass')
                     .type('form')
-                    .send({oldPassword:'prueba1', newPassword:'p'})
+                    .send({oldPassword:'prueba1', newPassword:'p', repPassword:'p'})
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(-4);
                     })
@@ -103,7 +103,7 @@ describe('login-plus with fs', function(){
                     agent
                     .post(opt.base+'/chpass')
                     .type('form')
-                    .send({oldPassword:'error', newPassword:'prueba2'})
+                    .send({oldPassword:'error', newPassword:'prueba2', repPassword:'prueba2'})
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(3);
                     })
