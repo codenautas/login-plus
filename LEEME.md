@@ -7,7 +7,7 @@ login service for express
 [!--lang:*-->
 
 <!-- cucardas -->
-![stable](https://img.shields.io/badge/stability-stable-brightgreen.svg)
+![stable](https://img.shields.io/badge/stability-stable-blue.svg)
 [![npm-version](https://img.shields.io/npm/v/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![downloads](https://img.shields.io/npm/dm/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![build](https://github.com/codenautas/login-plus/actions/workflows/node.js.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/node.js.yml)
