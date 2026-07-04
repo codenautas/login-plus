@@ -102,6 +102,11 @@ describe('login-plus', function(){
                     })
                     .end(done);
                 });
+                it('must set the session cookie with SameSite=Lax', function(done){
+                    agent.get(opt.base+'/login')
+                    .expect('set-cookie',/connect.sid=.*SameSite=Lax/i)
+                    .end(done);
+                });
                 it('must receive login parameters', function(done){
                     agent
                     .post(opt.base+'/login')
@@ -216,6 +221,22 @@ describe('login-plus', function(){
                         .expect(function(res){
                             // console.log('****');
                             //console.log('set-cookies',res.headers["set-cookie"]);
+                        })
+                        .expect(302, /Redirecting to .*\/index/, done);
+                    })
+                });
+                it('must not redirect to an external protocol-relative url (open redirect)', function(done){
+                    agent
+                    .get('//evil.com/x').end(function(){
+                        agent
+                        .post(opt.base+'/login')
+                        .type('form')
+                        .send({username:'prueba', password:'prueba1'})
+                        .expect(function(res){
+                            var location=res.headers.location;
+                            if(/evil\.com/.test(location)){
+                                throw new Error('open redirect: redirected to '+location);
+                            }
                         })
                         .expect(302, /Redirecting to .*\/index/, done);
                     })
@@ -347,6 +368,18 @@ describe('login-plus', function(){
                     .expect(200, /<div>The login page/, done);
                 });
             });
+        });
+    });
+    describe("session secret", function(){
+        it("uses a strong random secret (not the weak 'keyboard cat' fallback)", function(){
+            var manager = new loginPlus.Manager;
+            expect(manager.secret).to.not.match(/^keyboard cat/);
+            expect(manager.secret).to.match(/^[0-9a-f]{64}$/);
+        });
+        it("generates a different secret for each Manager instance", function(){
+            var manager1 = new loginPlus.Manager;
+            var manager2 = new loginPlus.Manager;
+            expect(manager1.secret).to.not.eql(manager2.secret);
         });
     });
     describe("warnings", function(){
