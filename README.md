@@ -1,12 +1,12 @@
 # login-plus
 login service for express
 
-![stable](https://img.shields.io/badge/stability-stable-blue.svg)
 [![npm-version](https://img.shields.io/npm/v/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![downloads](https://img.shields.io/npm/dm/login-plus.svg)](https://npmjs.org/package/login-plus)
-[![build](https://github.com/codenautas/login-plus/actions/workflows/node.js.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/node.js.yml)
+[![build](https://github.com/codenautas/login-plus/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/build-and-test.yml)
 [![coverage](https://img.shields.io/coveralls/codenautas/login-plus/master.svg)](https://coveralls.io/r/codenautas/login-plus)
-[![outdated-deps](https://img.shields.io/github/issues-search/codenautas/login-plus?color=9cf&label=outdated-deps&query=is%3Apr%20author%3Aapp%2Fdependabot%20is%3Aopen)](https://github.com/codenautas/login-plus/pulls/app%2Fdependabot)
+[![security](https://socket.dev/api/badge/npm/package/login-plus)](https://socket.dev/npm/package/login-plus)
+[![qa-control](https://github.com/codenautas/login-plus/actions/workflows/qa-control.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/qa-control.yml)
 
 
 language: ![English](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-en.png)

@@ -7,18 +7,18 @@ login service for express
 [!--lang:*-->
 
 <!-- cucardas -->
-![stable](https://img.shields.io/badge/stability-stable-blue.svg)
 [![npm-version](https://img.shields.io/npm/v/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![downloads](https://img.shields.io/npm/dm/login-plus.svg)](https://npmjs.org/package/login-plus)
-[![build](https://github.com/codenautas/login-plus/actions/workflows/node.js.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/node.js.yml)
+[![build](https://github.com/codenautas/login-plus/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/build-and-test.yml)
 [![coverage](https://img.shields.io/coveralls/codenautas/login-plus/master.svg)](https://coveralls.io/r/codenautas/login-plus)
-[![outdated-deps](https://img.shields.io/github/issues-search/codenautas/login-plus?color=9cf&label=outdated-deps&query=is%3Apr%20author%3Aapp%2Fdependabot%20is%3Aopen)](https://github.com/codenautas/login-plus/pulls/app%2Fdependabot)
+[![security](https://socket.dev/api/badge/npm/package/login-plus)](https://socket.dev/npm/package/login-plus)
+[![qa-control](https://github.com/codenautas/login-plus/actions/workflows/qa-control.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/qa-control.yml)
 
 <!--multilang buttons-->
 
 idioma: ![castellano](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-es.png)
-también disponible en: 
-[![English](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-en.png)](README.md) - 
+también disponible en:
+[![English](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-en.png)](README.md) -
 
 <!--lang:es-->
 
@@ -81,8 +81,8 @@ app.get('/user-info',function(req,res){
 
 <!--lang:es-->
 
-A partir de esta línea `loginPlus` controla que la sesión esté logueada 
-si no redirecciona a `/login`. 
+A partir de esta línea `loginPlus` controla que la sesión esté logueada
+si no redirecciona a `/login`.
 
 opts                | predeterminado       | uso
 --------------------|----------------------|---------------
@@ -90,7 +90,7 @@ loginPagePath       | *interno [1]*        | dirección al archivo .jade que tie
 loginPageServe      | *motor de jade*      | función que sirve la página de login (usar esta función cuando no se desea un archivo .jade)
 baseUrl             | `/`                  | dirección base de todas las URL
 successRedirect     | *obligatorio*        | dirección a donde debe redirigir la aplicación cuando hay un loggin exitoso
-successReturns      | false                | indica si debe volver a la URL anterior en caso de que al login se haya llegado redireccionando         
+successReturns      | false                | indica si debe volver a la URL anterior en caso de que al login se haya llegado redireccionando
 loginUrlPath        | `/login`             | dirección donde se muestra la página de login
 noLoggedUrlPath     | `/login`             | dirección de la página que se muestra cuando no está logueado si intenta acceder a una página donde se requiere autenticación
 failedLoginUrlPath  | `/login`             | dirección de la página que se muestra cuando falla el login
@@ -111,13 +111,13 @@ skipCheckAlreadyLoggedIn | false           | permite que `/login` muestre la pá
 .autoLogin          | false                | si permite el autologuea desde la URL especificando los parámetros `?u=user&p=pass&a=1`
 store.module        | null                 | functión de devuelve el constructor apara almacenar el los datos de sesión (recibe como parámetro la instancia de express-session)
 
-Los middlewares a partir de ahí pueden acceder a los datos de sesión 
+Los middlewares a partir de ahí pueden acceder a los datos de sesión
 que están en `false`.
 
 <!--lang:en--]
 
-From this line on, `loginPlus` controls whether the session is logged. 
-If not, it redirects to `/login`.  
+From this line on, `loginPlus` controls whether the session is logged.
+If not, it redirects to `/login`.
 
 opts                | default opts         | use
 --------------------|----------------------|---------------
@@ -127,7 +127,7 @@ baseUrl             | `/`                  | base URL for all other URLs
 successRedirect     | *mandatory*          | successful login path
 successReturns      | false                | returns to previous path when login
 loginUrlPath        | `/login`             | URL to the login page
-noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in 
+noLoggedUrlPath     | `/login`             | URL to the unlogged page where the authentification is required when trying to log in
 failedLoginUrlPath  | `/login`             | URL to the failing login page
 userFieldName       | `username`           | name of the "username" field
 secret              | random key           | keys for cookies
@@ -154,14 +154,14 @@ From this point on, the middlewares can access the data session contained in `re
 
 <!--lang:es-->
 
-Registra la función que debe validar el usuario 
-y en caso de ser válido obtener la información adicional necesaria para la seción 
+Registra la función que debe validar el usuario
+y en caso de ser válido obtener la información adicional necesaria para la seción
 (ej: rol o nivel de permisos) que será accesible en `req.session.passport`.
 
 <!--lang:en--]
 
-It registers the function that the user must validate and in case of success, obtains 
-the additional necessary information for the session (for example, role or level of permission) 
+It registers the function that the user must validate and in case of success, obtains
+the additional necessary information for the session (for example, role or level of permission)
 that will be available in `req.session.passport`
 
 [!--lang:es-->
