@@ -30,15 +30,15 @@ describe('login-plus', function(){
         {param:'/'          ,base:''           ,root:true },
         {param:'/base'      ,base:'/base'      ,root:false},
         {param:'/base/'     ,base:'/base'      ,root:false},
-        {param:'/doble/base',base:'/doble/base',root:false}, 
+        {param:'/doble/base',base:'/doble/base',root:false},
         {param:null         ,base:''           ,root:true },
     ].forEach(function(opt){
         describe('base:'+opt.param, function(){
             describe('not logged', function(){
                 var agent;
                 before(function (done) {
-                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe}).then(function(_agent){ 
-                        agent=_agent; 
+                    createServerGetAgent({baseUrl:opt.base, loginPageServe:simpleLoginPageServe}).then(function(_agent){
+                        agent=_agent;
                     }).then(done,done);
                 });
                 it('must redirect if not logged in', function(done){
@@ -84,12 +84,12 @@ describe('login-plus', function(){
                 var agent;
                 before(function (done) {
                     createServerGetAgent({
-                        baseUrl:opt.base, 
-                        loginPageServe:simpleLoginPageServe, 
+                        baseUrl:opt.base,
+                        loginPageServe:simpleLoginPageServe,
                         userFieldName:'userFieldName',
                         alreadyLoggedIn:'/already-logged-in',
-                    }).then(function(_agent){ 
-                        agent=_agent; 
+                    }).then(function(_agent){
+                        agent=_agent;
                     }).then(done,done);
                 });
                 it('must set cookie', function(done){
@@ -160,13 +160,13 @@ describe('login-plus', function(){
                 var agent;
                 beforeEach(function (done) {
                     createServerGetAgent({
-                        baseUrl:opt.base, 
-                        loginPageServe:simpleLoginPageServe, 
+                        baseUrl:opt.base,
+                        loginPageServe:simpleLoginPageServe,
                         userFieldName:'userFieldName',
                         alreadyLoggedIn:'/already-logged-in',
                         successReturns:true
-                    }).then(function(_agent){ 
-                        agent=_agent; 
+                    }).then(function(_agent){
+                        agent=_agent;
                     }).then(done,done);
                 });
                 it('must receive redirect to previous', function(done){
@@ -272,14 +272,14 @@ describe('login-plus', function(){
                     });
                 });
                 it("serve the internal files",function(){
-                    createServerGetAgent({baseUrl:opt.base, withSomeMiddleware:true, successRedirect:'/menu'}).then(function(agent){ 
+                    createServerGetAgent({baseUrl:opt.base, withSomeMiddleware:true, successRedirect:'/menu'}).then(function(agent){
                         return agent
                         .get(opt.base+'/auto-login.js')
                         .expect(200, /^"use strict";/);
                     });
                 });
                 it("serve the default login page",function(){
-                    return createServerGetAgent({baseUrl:opt.base, chPassUrlPath:false}).then(function(agent){ 
+                    return createServerGetAgent({baseUrl:opt.base, chPassUrlPath:false}).then(function(agent){
                         return agent
                         .get(opt.base+'/login')
                         .expect(200, /label.*Username/)
@@ -289,7 +289,7 @@ describe('login-plus', function(){
                 });
                 it("serve the parametrized default login page",function(done){
                     var loginForm=changing(loginPlus.spanishLoginForm,{formImg:'this.png'});
-                    createServerGetAgent({baseUrl:opt.base, loginForm}).then(function(agent){ 
+                    createServerGetAgent({baseUrl:opt.base, loginForm}).then(function(agent){
                         return agent
                         .get(opt.base+'/login')
                         .expect(200, /usuario.*name="username"/);
@@ -300,14 +300,14 @@ describe('login-plus', function(){
                 var agent;
                 before(function (done) {
                     createServerGetAgent({
-                        baseUrl:opt.base, 
+                        baseUrl:opt.base,
                         loginPageServe:simpleLoginPageServe,
                         php:{
                             varLogged:'abcd_usu_nombre',
                             save_path:'./test/temp-session'
                         }
-                    }).then(function(_agent){ 
-                        agent=_agent; 
+                    }).then(function(_agent){
+                        agent=_agent;
                     }).then(done,done);
                 });
                 it('must reject if php session is not active', function(done){
@@ -332,13 +332,13 @@ describe('login-plus', function(){
                 var agent;
                 before(function (done) {
                     createServerGetAgent({
-                        baseUrl:opt.base, 
-                        loginPageServe:simpleLoginPageServe, 
+                        baseUrl:opt.base,
+                        loginPageServe:simpleLoginPageServe,
                         userFieldName:'userFieldName',
                         alreadyLoggedIn:'/already-logged-in',
                         skipCheckAlreadyLoggedIn:true
-                    }).then(function(_agent){ 
-                        agent=_agent; 
+                    }).then(function(_agent){
+                        agent=_agent;
                     }).then(done,done);
                 });
                 it('must set cookie', function(done){

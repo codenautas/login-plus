@@ -13,7 +13,7 @@ create table example."users" (
 );
 alter table example."users" owner to codenautas_user;
 
-insert into example."users"("user", active, pass_md5) values 
+insert into example."users"("user", active, pass_md5) values
    ('emilio', true, md5('prueba1'||'emilio')),
    ('estefania', true, md5('prueba1'||'estefania')),
    ('diegoefe', true, md5('prueba1'||'diegoefe')),

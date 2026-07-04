@@ -95,7 +95,7 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
             });
         });
     }
-    return {createServerGetAgent};   
+    return {createServerGetAgent};
 }
 
 module.exports = internal;

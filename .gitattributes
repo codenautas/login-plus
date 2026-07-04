@@ -1,0 +1,13 @@
+# Normalize to LF in the repo on commit; check out with the OS-native EOL.
+* text=auto
+
+.gitignore text eol=lf
+.travis.yml text eol=lf
+.vscode/launch.json text eol=lf
+LICENSE text eol=lf
+example/www/.htaccess text eol=lf
+package-lock.json text eol=lf
+package.json text eol=lf
+test/common.js text eol=lf
+test/test-fs.js text eol=lf
+test/test.js text eol=lf

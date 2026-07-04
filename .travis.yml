@@ -5,7 +5,7 @@ node_js:
 matrix:
   fast_finish: true
 script: "npm run-script test-ci"
-after_script: 
+after_script:
   - "npm install coveralls@2.11.9 && cat ./coverage/lcov.info | coveralls"
   - "cat ./coverage/lcov.info | codeclimate"
 addons:

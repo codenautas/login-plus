@@ -73,8 +73,8 @@ var mime = serveContent.mime;
 app.use(baseUrl+'/',serveContent('./node_modules/ajax-best-promise/bin', {allowedExts:'js'}));
 
 app.use(baseUrl+'/',serveContent('./client2', {
-    index: ['index.html'], 
-    extensions:[''], 
+    index: ['index.html'],
+    extensions:[''],
     allowedExts:validExts
 }));
 
