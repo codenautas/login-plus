@@ -109,6 +109,17 @@ describe('login-plus with fs', function(){
                     })
                     .expect(302, /Redirecting to \.\/chpass/, done);
                 });
+                it('must not crash when newPassword is missing', function(done){
+                    spy.globalChPassOk=-5;
+                    agent
+                    .post(opt.base+'/chpass')
+                    .type('form')
+                    .send({oldPassword:'prueba1'})
+                    .expect(function(res){
+                        expect(spy.globalChPassOk).to.eql(-5); // do not enter in setPasswordChanger
+                    })
+                    .expect(302, /Redirecting to \.\/chpass/, done);
+                });
                 it('must detect change password error', function(done){
                     spy.globalChPassOk=-3;
                     agent
