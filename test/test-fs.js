@@ -1,8 +1,4 @@
 "use strict";
-/*jshint eqnull:true */
-/*jshint globalstrict:true */
-/*jshint node:true */
-/*eslint-env node*/
 
 var express = require('express');
 //var cookieParser = require('cookie-parser');
@@ -44,7 +40,7 @@ describe('login-plus with fs', function(){
                         .get('/login')
                         .expect(404, done);
                     });
-                };
+                }
                 it('must redirect to success page', function(done){
                     agent
                     .post(opt.base+'/login')

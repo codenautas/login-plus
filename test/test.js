@@ -1,8 +1,4 @@
 "use strict";
-/*jshint eqnull:true */
-/*jshint globalstrict:true */
-/*jshint node:true */
-/*eslint-env node*/
 
 var express = require('express');
 //var cookieParser = require('cookie-parser');
@@ -70,14 +66,14 @@ describe('login-plus', function(){
                         agent
                         .get('/algo.txt')
                         .expect(function(rec){
-                            if(rec.status!=404){
+                            if (rec.status != 404) { /* eslint-disable-line eqeqeq */
                                 console.log('***************')
                                 console.log(rec);
                             }
                         })
                         .expect(404, done);
                     });
-                };
+                }
             });
             // TODO: poner un test para indicar que falta setValidator
             describe('to log', function(){
@@ -139,7 +135,7 @@ describe('login-plus', function(){
                         .get('/private/algo.txt')
                         .expect(404, done);
                     });
-                };
+                }
                 it('if the login page was visited then redirect to successful url', function(done){
                     agent
                     .get(opt.base+'/login')
@@ -246,12 +242,12 @@ describe('login-plus', function(){
                 var loginPlusM = new loginPlus.Manager;
                 it("reject init if cookie-parser is setted",function(done){
                     var app = express();
-                    app.use(require('cookie-parser')());
+                    app.use(require('cookie-parser')()); /* eslint-disable-line global-require */
                     Promise.resolve().then(function(){
                         return loginPlusM.init(app,{successRedirect:'/menu'})
                     }).then(function(){
                         done("an error expected");
-                    },function(err){
+                    },function(){
                         done();
                     });
                 });
@@ -259,7 +255,7 @@ describe('login-plus', function(){
                     var app = express();
                     loginPlusM.init(app,{loginPagePath:'unexisting-path', successRedirect:'/menu'}).then(function(){
                         done("an error expected");
-                    },function(err){
+                    },function(){
                         done();
                     });
                 });
@@ -267,12 +263,12 @@ describe('login-plus', function(){
                     var app = express();
                     loginPlusM.init(app,{fileNameLogin:'unexisting-file', successRedirect:'/menu'}).then(function(){
                         done("an error expected");
-                    },function(err){
+                    },function(){
                         done();
                     });
                 });
                 it("serve the internal files",function(){
-                    createServerGetAgent({baseUrl:opt.base, withSomeMiddleware:true, successRedirect:'/menu'}).then(function(agent){
+                    return createServerGetAgent({baseUrl:opt.base, withSomeMiddleware:true, successRedirect:'/menu'}).then(function(agent){
                         return agent
                         .get(opt.base+'/auto-login.js')
                         .expect(200, /^"use strict";/);
@@ -394,7 +390,7 @@ describe('login-plus', function(){
                 ]);
             }finally{
                 console.log.restore();
-            };
+            }
         });
         it("detect lack of mandatory opt successRedirect", function(){
             sinon.stub(console, "log");
@@ -409,7 +405,7 @@ describe('login-plus', function(){
                 ]);
             }finally{
                 console.log.restore();
-            };
+            }
         });
         it("warn deprecated use of options", function(){
             sinon.stub(console, "log");
@@ -422,7 +418,7 @@ describe('login-plus', function(){
                 ]);
             }finally{
                 console.log.restore();
-            };
+            }
         });
         it("warn alert missuse of parentesis creating object", function(){
             sinon.stub(console, "log");
@@ -435,7 +431,7 @@ describe('login-plus', function(){
                 ]);
             }finally{
                 console.log.restore();
-            };
+            }
         });
     });
 });

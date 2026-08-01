@@ -1,8 +1,4 @@
 "use strict";
-/*jshint eqnull:true */
-/*jshint globalstrict:true */
-/*jshint node:true */
-/*eslint-env node*/
 
 var express = require('express');
 var cookieParser = require('cookie-parser');
@@ -14,6 +10,8 @@ var request = require('supertest');
 var loginPlus = require('..');
 
 var changing = require('best-globals').changing;
+
+const SHOW_RAW_BODY = true;
 
 var simpleLoginPageServe=function(req, res, next){
     res.end('<div>The login page');
@@ -37,9 +35,9 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
             if(opts.withSomeMiddleware){
                 app.use(function(req,res,next){ next(); });
             }
-            var concat = require('concat-stream');
+            var concat = require('concat-stream'); /* eslint-disable-line global-require */
             app.use(bodyParser.urlencoded({extended:true}));
-            if("show raw body"){
+            if(SHOW_RAW_BODY){
                 app.use(function(req, res, next){
                   req.pipe(concat(function(data){
                     req.bodyRaw = data.toString();
@@ -55,7 +53,7 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
             });
             loginPlusManager.init(app,opts);
             var validatorStrategy = function(req, username, password, done){
-                if(username=='prueba' && password=='prueba1'){
+                if (username === 'prueba' && password === 'prueba1') {
                     if(opts2.userFieldName){
                         done(null, {userFieldName: 'prueba', userData: 'data-user'});
                     }else{
@@ -71,10 +69,10 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
                 loginPlusManager.setValidatorStrategy(validatorStrategy);
             }
             loginPlusManager.setPasswordChanger(function(req, username, oldPassword, newPassword, done){
-                if(username=='user' && oldPassword=='prueba1' && newPassword=='prueba2'){
+                if (username === 'user' && oldPassword === 'prueba1' && newPassword === 'prueba2') {
                     spy.globalChPassOk=1;
                     done(null, true);
-                }else if(username=='user' && oldPassword!='prueba1' && oldPassword!='error'){
+                }else if (username ==='user' && oldPassword !== 'prueba1' && oldPassword !== 'error') {
                     spy.globalChPassOk=2;
                     done(null, false, {message: 'old does not match'});
                 }else{
@@ -89,10 +87,9 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
             app.get(opts2.baseUrl+'/whoami',function(req,res){
                 res.end('I am: '+JSON.stringify(req.user));
             });
-            var server = app.listen(INTERNAL_PORT++, function(){
-                // resolve(server);
-                resolve(request.agent(server));
-            });
+            // supertest levanta y cierra un servidor efímero por request.
+            // Con app.listen los servidores quedaban abiertos y se agotaban los handles.
+            resolve(request.agent(app));
         });
     }
     return {createServerGetAgent};

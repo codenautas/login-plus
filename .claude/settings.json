@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"console.log\\(require\\('./node_modules/ensure-login/package.json'\\).version\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(cp /c/hecho/npm/login-plus/package.json ./package.json.new)",
+      "Bash(cp /c/hecho/npm/login-plus/package-lock.json ./package-lock.json.new)",
+      "Bash(netstat -ano)",
+      "Bash(cp test/common.js /c/Users/emili/AppData/Local/Temp/claude/c--hecho-npm-login-plus/d1efc6a2-51e9-459e-8bd6-a7365ad8e575/scratchpad/common-6fb7ecd.js)"
+    ]
+  }
+}

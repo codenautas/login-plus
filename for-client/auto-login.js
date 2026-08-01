@@ -15,7 +15,7 @@ window.addEventListener('load',function(){
             elem.value=params[parameterName];
         }
     });
-    if(params['a']==1){
+    if (params['a'] == 1) { /* eslint-disable-line eqeqeq */
         loginForm.submit();
     }
 });

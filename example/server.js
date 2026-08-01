@@ -1,8 +1,4 @@
 "use strict";
-/*jshint eqnull:true */
-/*jshint globalstrict:true */
-/*jshint node:true */
-/*eslint-env node*/
 
 // APP
 
