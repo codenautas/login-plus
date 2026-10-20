@@ -19,7 +19,6 @@ var simpleLoginPageServe=function(req, res, next){
 
 function internal(INTERNAL_PORT, spy, validatorOpt){
 
-    INTERNAL_PORT = INTERNAL_PORT || 34444;
 
     function createServerGetAgent(opts) {
         return new Promise(function(resolve, reject){
@@ -51,7 +50,7 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
                 res.cookie('PHPSESSID', 'oek1ort6vbqdd7374eft6adv61');
                 res.end('ok');
             });
-            loginPlusManager.init(app,opts);
+            void loginPlusManager.init(app,opts);
             var validatorStrategy = function(req, username, password, done){
                 if (username === 'prueba' && password === 'prueba1') {
                     if(opts2.userFieldName){

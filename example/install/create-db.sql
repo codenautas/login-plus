@@ -9,14 +9,22 @@ grant all on schema example to codenautas_user;
 create table example."users" (
   "user" text primary key,
   active boolean default false,
-  pass_md5 text
+  pass_sha256 text
 );
 alter table example."users" owner to codenautas_user;
 
-insert into example."users"("user", active, pass_md5) values
-   ('emilio', true, md5('prueba1'||'emilio')),
-   ('estefania', true, md5('prueba1'||'estefania')),
-   ('diegoefe', true, md5('prueba1'||'diegoefe')),
-   ('prueba', true, md5('prueba1'||'prueba')),
-   ('sinclave', true, 'sarasasasasas'),
-   ('inactivo', false, md5('prueba1'||'inactivo'));
+-- the password of every example user is prueba1; the hash is sha256(password || user), the same as passwordHash in server.js
+insert into example."users"("user", active, pass_sha256)
+  select u."user", u.active, encode(sha256(convert_to(p.pass || u."user", 'UTF8')), 'hex')
+    from (values
+      ('emilio', true),
+      ('estefania', true),
+      ('diegoefe', true),
+      ('prueba', true),
+      ('inactivo', false)
+    ) as u("user", active),
+    (select 'prueba1' as pass) as p;
+
+-- user with an invalid hash: it cannot log in
+insert into example."users"("user", active, pass_sha256) values
+   ('sinclave', true, 'sarasasasasas');

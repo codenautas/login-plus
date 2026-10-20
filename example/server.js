@@ -12,10 +12,10 @@ var readYaml = require('read-yaml-promise');
 var serveContent = require('serve-content');
 var MiniTools = require('mini-tools');
 var bestGlobals = require('best-globals');
-var crypto = require('crypto');
+var crypto = require('node:crypto');
 
-function md5(text){
-    return crypto.createHash('md5').update(text).digest('hex');
+function passwordHash(username, password){
+    return crypto.createHash('sha256').update(password+username.toLowerCase()).digest('hex');
 }
 
 app.use(cookieParser());
@@ -47,7 +47,7 @@ app.use(baseUrl+'/public', serveContent('example/unlogged', {allowedExts:validEx
 
 var loginPlus = require('../lib/login-plus.js');
 var loginPlusManager = new loginPlus.Manager;
-loginPlusManager.init(app,{allowHttpLogin:true, baseUrl:baseUrl,successRedirect:'/menu'});
+void loginPlusManager.init(app,{allowHttpLogin:true, baseUrl:baseUrl,successRedirect:'/menu'});
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
@@ -99,8 +99,8 @@ MiniTools.readConfig([
         function(req, username, password, done) {
             console.log('validating in req',req.session,req.user);
             clientDb.query(
-                'SELECT "user" as username, active FROM example."users" WHERE "user"=$1 AND pass_md5=$2',
-                [username, md5(password+username.toLowerCase())]
+                'SELECT "user" as username, active FROM example."users" WHERE "user"=$1 AND pass_sha256=$2',
+                [username, passwordHash(username, password)]
             ).fetchUniqueRow().then(function(data){
                 console.log('datos traidos',data.row);
                 if(data.row.active){
@@ -125,8 +125,8 @@ MiniTools.readConfig([
         function(req, username, oldPassword, newPassword, done) {
             return Promise.resolve().then(function(){
                 return clientDb.query(
-                    'UPDATE example."users" SET pass_md5=$3 WHERE "user"=$1 AND pass_md5=$2 RETURNING 1 as ok',
-                    [username, md5(oldPassword+username.toLowerCase()), md5(newPassword+username.toLowerCase())]
+                    'UPDATE example."users" SET pass_sha256=$3 WHERE "user"=$1 AND pass_sha256=$2 RETURNING 1 as ok',
+                    [username, passwordHash(username, oldPassword), passwordHash(username, newPassword)]
                 ).fetchOneRowIfExists();
             }).then(function(result){
                 console.log('datos traidos p/ch.pass',result);

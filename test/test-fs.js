@@ -30,7 +30,7 @@ describe('login-plus with fs', function(){
                 var agent;
                 before(function (done) {
                     spy.globalChPassOk=false;
-                    createServerGetAgent({baseUrl:opt.base, successRedirect:'/loggedin', log:{errors:new Date(new Date().getTime()+opt.deltaT)}},34432).then(function(_agent){
+                    createServerGetAgent({baseUrl:opt.base, successRedirect:'/loggedin', log:{errors:new Date(Date.now()+opt.deltaT)}},34432).then(function(_agent){
                         agent=_agent;
                     }).then(done,done);
                 });
@@ -99,7 +99,7 @@ describe('login-plus with fs', function(){
                     agent
                     .post(opt.base+'/chpass')
                     .type('form')
-                    .send({oldPassword:'prueba1', newPassword:'NonMatching1!', repPassword:'NonMatching2!'})
+                    .send({oldPassword:'prueba1', newPassword:'NonMatching1!', repPassword:'NonMatching2!'}) // eslint-disable-line sonarjs/no-hardcoded-passwords
                     .expect(function(res){
                         expect(spy.globalChPassOk).to.eql(-44); // do not enter in setPasswordChanger
                     })

@@ -75,6 +75,7 @@ describe('login-plus', function(){
                     });
                 }
             });
+            // eslint-disable-next-line sonarjs/todo-tag
             // TODO: poner un test para indicar que falta setValidator
             describe('to log', function(){
                 var agent;
@@ -397,7 +398,7 @@ describe('login-plus', function(){
             var loginPlusDep = new loginPlus.Manager;
             var app = express();
             expect(function(){
-                loginPlusDep.init(app, {unloggedPath: 'x'});
+                void loginPlusDep.init(app, {unloggedPath: 'x'});
             }).to.throwError(/lack.*mandatory/);
             try{
                 expect(console.log.args).to.eql([
@@ -411,7 +412,7 @@ describe('login-plus', function(){
             sinon.stub(console, "log");
             var loginPlusDep = new loginPlus.Manager;
             var app = express();
-            loginPlusDep.init(app, {unloggedPath: 'x', successRedirect:'/menu'});
+            void loginPlusDep.init(app, {unloggedPath: 'x', successRedirect:'/menu'});
             try{
                 expect(console.log.args).to.eql([
                     [ 'deprecate login-plus.option.unloggedPath' ]

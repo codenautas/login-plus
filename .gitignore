@@ -31,3 +31,6 @@ local-*
 sessions/*.j*
 
 .nyc_output
+
+.claude/
+.fuse_hidden*

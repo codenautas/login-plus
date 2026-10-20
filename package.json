@@ -41,10 +41,12 @@
     "session-file-store": "^1.5.0"
   },
   "devDependencies": {
-    "ajax-best-promise": "^0.4.5",
+    "ajax-best-promise": "^0.4.6",
     "body-parser": "^2.3.0",
     "concat-stream": "^2.0.0",
     "cookie-parser": "^1.4.7",
+    "eslint-plugin-sonarjs": "^4.2.2",
+    "eslint-plugin-unicorn": "^78.0.0",
     "expect.js": "^0.3.1",
     "express": "^5.3.0",
     "mocha": "^12.0.3",
@@ -52,7 +54,7 @@
     "pg-promise-strict": "^1.5.3",
     "php-session": "^0.1.0",
     "pug": "^3.0.4",
-    "qa-control": "^0.14.0",
+    "qa-control": "^0.14.1",
     "read-yaml-promise": "^1.0.2",
     "self-explain": "^0.11.0",
     "serve-content": "^1.0.8",
@@ -81,6 +83,9 @@
     "run-in": "server",
     "type": "lib",
     "coverage": 100,
-    "gha": "all"
+    "gha": "all",
+    "silenced": [
+      "file_1_does_not_match_custom_2"
+    ]
   }
 }
