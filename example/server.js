@@ -13,6 +13,7 @@ var serveContent = require('serve-content');
 var MiniTools = require('mini-tools');
 var bestGlobals = require('best-globals');
 var crypto = require('node:crypto');
+var escapeHtml = require('escape-html');
 
 function passwordHash(username, password){
     return crypto.createHash('sha256').update(password+username.toLowerCase()).digest('hex');
@@ -21,16 +22,18 @@ function passwordHash(username, password){
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 
+// only the query and some well known headers are logged: the body and the cookies can contain secrets
+// JSON.stringify escapes the line feeds, so the values cannot forge log lines
+var LOGGED_HEADERS = ['host', 'user-agent', 'accept', 'accept-language', 'content-type', 'content-length'];
+
 app.use(function(req,res,next){
-    /* return next(); // */
-    console.log('***************************');
-    console.dir(req,{depth:0});
-    console.log('req.cookies',req.cookies);
-    console.log('req.query  ',req.query  );
-    console.log('req.body   ',req.body   );
-    console.log('req.params ',req.params );
-    console.log('req.headers',req.headers);
-    // console.dir(res,{depth:0});
+    var headers = {};
+    LOGGED_HEADERS.forEach(function(name){
+        if(name in req.headers){
+            headers[name] = req.headers[name];
+        }
+    });
+    console.log('request', JSON.stringify({method:req.method, path:req.path, query:req.query, headers:headers}));
     next();
 });
 
@@ -51,8 +54,7 @@ void loginPlusManager.init(app,{allowHttpLogin:true, baseUrl:baseUrl,successRedi
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
-    console.log('req.path/query/body',req.path,req.query,req.body);
-    console.log('req.session',req.session,req.user);
+    console.log('logged', JSON.stringify({path:req.path, query:req.query, username:req.user?.username}));
     next();
 });
 
@@ -152,9 +154,9 @@ MiniTools.readConfig([
         }
         var result=(Number(params.alfa)+Number(params.beta)).toString()+' (de '+JSON.stringify(params)+')';
         if(req.method==='POST'){
-            res.send(result);
+            res.type('text/plain').send(result);
         }else{
-            res.send('<h1>la suma es '+result+'<h1><p><small>Servicio privado para el usuario '+req.session.passport.user);
+            res.send('<h1>la suma es '+escapeHtml(result)+'</h1><p><small>Servicio privado para el usuario '+escapeHtml(req.user.username));
         }
     });
 }).catch(function(err){
