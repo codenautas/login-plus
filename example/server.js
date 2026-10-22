@@ -33,7 +33,7 @@ app.use(function(req,res,next){
             headers[name] = req.headers[name];
         }
     });
-    console.log('request', JSON.stringify({method:req.method, path:req.path, query:req.query, headers:headers}));
+    console.log('request', {method:req.method, path:req.path, query:req.query, headers:headers});
     next();
 });
 
@@ -54,7 +54,7 @@ void loginPlusManager.init(app,{allowHttpLogin:true, baseUrl:baseUrl,successRedi
 
 app.use(function(req,res,next){
     console.log('------ logged ---------');
-    console.log('logged', JSON.stringify({path:req.path, query:req.query, username:req.user?.username}));
+    console.log('logged', {path:req.path, query:req.query, username:req.user?.username});
     next();
 });
 
@@ -153,9 +153,10 @@ MiniTools.readConfig([
             params=req.query;
         }
         var result=(Number(params.alfa)+Number(params.beta)).toString()+' (de '+JSON.stringify(params)+')';
-        if(req.method==='POST'){
-            res.type('text/plain').send(result);
-        }else{
+        if (req.method==='POST') {
+            res.set('Content-Type', 'text/plain');
+            res.send(result);
+        } else {
             res.send('<h1>la suma es '+escapeHtml(result)+'</h1><p><small>Servicio privado para el usuario '+escapeHtml(req.user.username));
         }
     });

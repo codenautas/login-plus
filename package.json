@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "ajax-best-promise": "^0.4.6",
-    "body-parser": "^2.3.0",
+    "body-parser": "^2.4.0",
     "concat-stream": "^2.0.0",
     "cookie-parser": "^1.4.7",
     "escape-html": "^1.0.3",
