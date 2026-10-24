@@ -5,6 +5,7 @@ login service for express
 [![downloads](https://img.shields.io/npm/dm/login-plus.svg)](https://npmjs.org/package/login-plus)
 [![build](https://github.com/codenautas/login-plus/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/build-and-test.yml)
 [![coverage](https://img.shields.io/coveralls/codenautas/login-plus/master.svg)](https://coveralls.io/r/codenautas/login-plus)
+[![sonar](https://sonarcloud.io/api/project_badges/measure?project=codenautas_login-plus&metric=alert_status)](https://sonarcloud.io/summary/overall?id=codenautas_login-plus)
 [![qa-control](https://github.com/codenautas/login-plus/actions/workflows/qa-control.yml/badge.svg)](https://github.com/codenautas/login-plus/actions/workflows/qa-control.yml)
 
 
