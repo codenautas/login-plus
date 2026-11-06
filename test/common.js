@@ -24,6 +24,16 @@ function internal(INTERNAL_PORT, spy, validatorOpt){
         return new Promise(function(resolve, reject){
             var app = express();
             var loginPlusManager = new loginPlus.Manager;
+            if(opts?.testSetReturnTo){
+                // simula que otro middleware guardó req.session.returnTo sin validarlo
+                // (se define antes de initCookieParser porque ahí se toman las opciones)
+                opts.schrödinger=function(){
+                    app.get(opts.baseUrl+'/test-set-return-to', function(req,res){
+                        req.session.returnTo = req.query.to;
+                        res.end('ok');
+                    });
+                };
+            }
             if(opts && !opts.withSomeMiddleware){
                 opts.allowHttpLogin=true;
                 if(opts.successRedirect == null){

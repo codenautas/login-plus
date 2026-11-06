@@ -239,6 +239,54 @@ describe('login-plus', function(){
                     })
                 });
             });
+            describe('to log using successReturns with a returnTo saved without validation', function(){
+                var agent;
+                beforeEach(function (done) {
+                    createServerGetAgent({
+                        baseUrl:opt.base,
+                        loginPageServe:simpleLoginPageServe,
+                        userFieldName:'userFieldName',
+                        alreadyLoggedIn:'/already-logged-in',
+                        successReturns:true,
+                        testSetReturnTo:true
+                    }).then(function(_agent){
+                        agent=_agent;
+                    }).then(done,done);
+                });
+                function testLoginWithReturnTo(returnTo, expectedRedirect, mustWarn){
+                    return function(done){
+                        agent
+                        .get(opt.base+'/test-set-return-to')
+                        .query({to:returnTo})
+                        .expect(200)
+                        .end(function(err){
+                            if(err){ return done(err); }
+                            sinon.stub(console, 'warn');
+                            agent
+                            .post(opt.base+'/login')
+                            .type('form')
+                            .send({username:'prueba', password:'prueba1'})
+                            .expect(302, expectedRedirect)
+                            .end(function(err){
+                                var warnArgs = console.warn.args;
+                                console.warn.restore();
+                                if(err){ return done(err); }
+                                try{
+                                    expect(warnArgs).to.eql(mustWarn?[['login-plus: se descarta req.session.returnTo porque no es una ruta local']]:[]);
+                                }catch(errExpect){
+                                    return done(errExpect);
+                                }
+                                done();
+                            });
+                        });
+                    };
+                }
+                it('must redirect to a local returnTo', testLoginWithReturnTo('/this-page?factor=3.141', /Redirecting to .*\/this-page\?factor=3\.141/, false));
+                it('must not redirect to a protocol-relative returnTo (//host)', testLoginWithReturnTo('//evil.com/x', /Redirecting to [^ ]*\/index$/, true));
+                it('must not redirect to a backslash protocol-relative returnTo (/\\host)', testLoginWithReturnTo('/\\evil.com/x', /Redirecting to [^ ]*\/index$/, true));
+                it('must not redirect to an absolute returnTo (https://host)', testLoginWithReturnTo('https://evil.com/x', /Redirecting to [^ ]*\/index$/, true));
+                it('must not redirect to a returnTo with a tab (/\\t/host)', testLoginWithReturnTo('/\t/evil.com/x', /Redirecting to [^ ]*\/index$/, true));
+            });
             describe("init",function(){
                 var loginPlusM = new loginPlus.Manager;
                 it("reject init if cookie-parser is setted",function(done){
